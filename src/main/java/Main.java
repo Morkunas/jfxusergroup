@@ -2,9 +2,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import de.saxsys.presentation.slider.DisplayDirection;
-import de.saxsys.presentation.slider.SlideComponent;
-import de.saxsys.presentation.slider.SlidePage;
+import de.saxsys.presentation.pageslider.SlideComponent;
+import de.saxsys.presentation.pageslider.SlidePage;
 
 public class Main extends Application {
 
@@ -33,17 +32,17 @@ public class Main extends Application {
 			public SlidePage createPage(int i) {
 				switch (i) {
 				case 0:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				case 2:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				case 3:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				case 4:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				case 5:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				case 6:
-					return new SlidePage(DisplayDirection.RIGHT);
+					return new SlidePage();
 				default:
 					return null;
 				}

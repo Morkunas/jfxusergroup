@@ -1,10 +1,16 @@
-package de.saxsys.presentation.slider;
+package de.saxsys.presentation.pageslider;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This pane manages the layout of panes in zigzag form.
+ * 
+ * @author sialcasa
+ * 
+ */
 public class ZiggZaggPane extends GridPane {
 
 	public ZiggZaggPane() {
@@ -13,7 +19,6 @@ public class ZiggZaggPane extends GridPane {
 
 	private void layoutContents(ObservableList<? extends Node> list) {
 		int x = 0, y = 0;
-
 		for (int i = 0; i < list.size(); i++) {
 			if (i % 2 == 0 && i > 0) {
 				y++;

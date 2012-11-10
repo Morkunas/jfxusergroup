@@ -1,4 +1,4 @@
-package de.saxsys.presentation.slider;
+package de.saxsys.presentation.pageslider;
 
 import java.util.ArrayList;
 import java.util.List;

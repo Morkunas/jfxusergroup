@@ -1,4 +1,4 @@
-package de.saxsys.presentation.slider;
+package de.saxsys.presentation.pageslider;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,10 +13,8 @@ import javafx.scene.layout.StackPane;
  * 
  */
 public class SlidePage extends StackPane {
-	private DisplayDirection displayDirection;
 
-	public SlidePage(DisplayDirection displayDirection) {
-		this.displayDirection = displayDirection;
+	public SlidePage() {
 		this.parentProperty().addListener(createParentChangeListener());
 	}
 
@@ -32,9 +30,4 @@ public class SlidePage extends StackPane {
 			}
 		};
 	}
-
-	public DisplayDirection getDisplayDirection() {
-		return displayDirection;
-	}
-
 }
