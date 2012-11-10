@@ -1,0 +1,12 @@
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/de.saxsys/presentation.slider/pom.properties
+target/classes/META-INF/maven/de.saxsys/presentation.slider/pom.xml
+target/classes/Main$1.class
+target/classes/Main.class
+target/classes/de/saxsys/presentation/slider/DisplayDirection.class
+target/classes/de/saxsys/presentation/slider/SlideComponent$1.class
+target/classes/de/saxsys/presentation/slider/SlideComponent.class
+target/classes/de/saxsys/presentation/slider/SlidePage$1.class
+target/classes/de/saxsys/presentation/slider/SlidePage.class
+target/classes/de/saxsys/presentation/slider/ZiggZaggPane$1.class
+target/classes/de/saxsys/presentation/slider/ZiggZaggPane.class
