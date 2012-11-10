@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -24,6 +23,8 @@ import javafx.util.Duration;
 public abstract class SlideComponent extends Pane {
 
 	private Pane contentPane;
+
+	// Placeholderpanes sind für caching / lazy loading vorgesehen
 	private List<Pane> placeHolderPanes = new ArrayList<Pane>();
 
 	private int pages;
@@ -51,10 +52,10 @@ public abstract class SlideComponent extends Pane {
 			placeHolderPanes.add(placeholder);
 			placeholder.minWidthProperty().bind(this.widthProperty());
 			placeholder.minHeightProperty().bind(this.heightProperty());
-			Rectangle e = new Rectangle();
-			e.setWidth(100);
-			e.setHeight(100);
-			placeholder.getChildren().add(e);
+
+			// Add content
+			placeholder.getChildren().add(createPage(i));
+
 			// Add pane to this component
 			contentPane.getChildren().add(placeholder);
 		}
