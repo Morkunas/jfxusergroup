@@ -1,8 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import de.saxsys.presentation.codeeditor.CodeEditor;
 import de.saxsys.presentation.pageslider.SlideComponent;
 import de.saxsys.presentation.pageslider.SlidePage;
 
@@ -67,10 +73,19 @@ public class Main extends Application {
 
 			private SlidePage createSlideComponent() {
 				SlidePage slidePage = new SlidePage();
-				Rectangle e = new Rectangle();
-				e.setWidth(100);
-				e.setHeight(100);
-				slidePage.getChildren().add(e);
+//				Rectangle e = new Rectangle();
+//				e.setWidth(100);
+//				e.setHeight(100);
+//				slidePage.getChildren().add(e);
+				CodeEditor codeEditor = new CodeEditor();
+				String sourceCode = "public static void main(String[] args) {\n"
+						+ "\tRectangle r = RectangleBuilder.create().width(#%i).height(#%i).build();\n"
+						+ "}";
+				List<Property<?>> properties = new ArrayList<>();
+				properties.add(new SimpleIntegerProperty(50));
+				properties.add(new SimpleIntegerProperty(100));
+				codeEditor.displaySourceCode(sourceCode, properties);
+				slidePage.getChildren().add(codeEditor);
 				return slidePage;
 			}
 		};
