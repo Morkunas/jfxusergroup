@@ -6,10 +6,10 @@ import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.Property;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 
 import org.apache.commons.lang.StringUtils;
@@ -67,7 +67,7 @@ public class CodeEditor extends VBox {
 					displayLine = inLine;
 				}
 
-				final Text inLineText = new Text();
+				final Label inLineText = new Label();
 				inLineText.setText(displayLine);
 				codeLineHBox.getChildren().add(inLineText);
 
@@ -93,6 +93,7 @@ public class CodeEditor extends VBox {
 
 				@Override
 				protected int computeValue() {
+					
 					return integerProperty == null ? 1 : (int) Math
 							.log10(integerProperty.getValue()) + 1;
 				}

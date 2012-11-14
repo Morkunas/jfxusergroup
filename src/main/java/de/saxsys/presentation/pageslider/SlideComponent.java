@@ -3,9 +3,12 @@ package de.saxsys.presentation.pageslider;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.saxsys.presentation.util.UFXBindings;
+
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -40,7 +43,6 @@ public abstract class SlideComponent extends Pane {
 		this.pages = pages;
 		this.getChildren().add(getContentPane());
 		initPresentationComponent();
-		startPresentation();
 		initListeners();
 	}
 
@@ -50,8 +52,7 @@ public abstract class SlideComponent extends Pane {
 			StackPane placeholder = new StackPane();
 			placeholder.setAlignment(Pos.CENTER);
 			placeHolderPanes.add(placeholder);
-			placeholder.minWidthProperty().bind(this.widthProperty());
-			placeholder.minHeightProperty().bind(this.heightProperty());
+			UFXBindings.bind(this, placeholder);
 
 			// Add content
 			placeholder.getChildren().add(createPage(i));
@@ -67,7 +68,11 @@ public abstract class SlideComponent extends Pane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				nextPage();
+				if(arg0.getButton() == MouseButton.SECONDARY){
+					nextPage();
+				}else{
+					previousPage();
+				}
 			}
 		});
 	}
@@ -77,14 +82,9 @@ public abstract class SlideComponent extends Pane {
 				.getMinX()) * -1;
 		double newY = (placeHolderPanes.get(actualPage).getBoundsInParent()
 				.getMinY()) * -1;
-		System.out.println(newX + " " + newY);
 		TranslateTransitionBuilder.create().node(this)
 				.duration(Duration.seconds(0.5)).fromX(getTranslateX())
 				.fromY(getTranslateY()).toX(newX).toY(newY).build().play();
-	}
-
-	private void startPresentation() {
-		placeHolderPanes.get(0).getChildren().add(createPage(0));
 	}
 
 	private Pane getContentPane() {
@@ -114,10 +114,10 @@ public abstract class SlideComponent extends Pane {
 	}
 
 	/**
-	 * Switch to the last page.
+	 * Switch to the previous page.
 	 */
-	public void lastPage() {
-		if (actualPage > 1) {
+	public void previousPage() {
+		if (actualPage > 0) {
 			actualPage--;
 		}
 		navigateToActualIndex();

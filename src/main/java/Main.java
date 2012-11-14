@@ -6,11 +6,11 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import de.saxsys.presentation.codeeditor.CodeEditor;
 import de.saxsys.presentation.pageslider.SlideComponent;
 import de.saxsys.presentation.pageslider.SlidePage;
+import de.saxsys.presentation.util.UFXBindings;
 
 public class Main extends Application {
 
@@ -26,8 +26,7 @@ public class Main extends Application {
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane, 600, 600);
 
-		pane.minWidthProperty().bind(scene.widthProperty());
-		pane.minHeightProperty().bind(scene.heightProperty());
+		UFXBindings.bind(scene, pane);
 
 		stage.setScene(scene);
 		stage.setTitle("Creating an Application Window");
@@ -73,10 +72,6 @@ public class Main extends Application {
 
 			private SlidePage createSlideComponent() {
 				SlidePage slidePage = new SlidePage();
-//				Rectangle e = new Rectangle();
-//				e.setWidth(100);
-//				e.setHeight(100);
-//				slidePage.getChildren().add(e);
 				CodeEditor codeEditor = new CodeEditor();
 				String sourceCode = "public static void main(String[] args) {\n"
 						+ "\tRectangle r = RectangleBuilder.create().width(#%i).height(#%i).build();\n"
@@ -89,8 +84,7 @@ public class Main extends Application {
 				return slidePage;
 			}
 		};
-		slideComponent.minWidthProperty().bind(stage.widthProperty());
-		slideComponent.minHeightProperty().bind(stage.heightProperty());
+		UFXBindings.bind(scene, slideComponent);
 		pane.getChildren().add(slideComponent);
 	}
 

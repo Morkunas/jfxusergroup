@@ -1,5 +1,6 @@
 package de.saxsys.presentation.pageslider;
 
+import de.saxsys.presentation.util.UFXBindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
@@ -24,8 +25,7 @@ public class SlidePage extends StackPane {
 					Parent arg1, Parent newParent) {
 				if (newParent != null) {
 					Pane pane = (Pane) newParent;
-					minWidthProperty().bind(pane.widthProperty());
-					minHeightProperty().bind(pane.heightProperty());
+					UFXBindings.bind(pane, SlidePage.this);
 				}
 			}
 		};
