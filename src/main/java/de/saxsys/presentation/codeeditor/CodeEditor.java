@@ -23,6 +23,10 @@ import org.apache.commons.lang.StringUtils;
  */
 public class CodeEditor extends VBox {
 
+	private String[] javaKeywords = new String[] {
+		"public", "static", "void", "final", "if", "else", "private", "protected"
+	};
+	
 	/**
 	 * Displays the given source code with editable {@link TextField}s for the
 	 * given {@link Property}s. The source code can be formatted in the
@@ -67,6 +71,7 @@ public class CodeEditor extends VBox {
 					displayLine = inLine;
 				}
 
+				
 				final Label inLineText = new Label();
 				inLineText.setText(displayLine);
 				codeLineHBox.getChildren().add(inLineText);
