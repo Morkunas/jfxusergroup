@@ -18,8 +18,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import de.saxsys.presentation.codeeditor.EditableCodeEditor;
 import de.saxsys.presentation.codeeditor.CodeEditor;
+import de.saxsys.presentation.codeeditor.EditableCodeEditor;
 import de.saxsys.presentation.util.UFXBindings;
 
 public class Databinding implements Initializable {
@@ -83,7 +83,7 @@ public class Databinding implements Initializable {
 		titleLabel.setText("Databinding (One-Way)");
 		examplePane.getChildren().clear();
 		CodeEditor editor = new CodeEditor(
-				"TextField textFieldLeft; \n TextField textFieldRight; \n textFieldRight.textProperty().bind(textFieldLeft.textProperty());");
+				"TextField textFieldLeft;\nTextField textFieldRight;\ntextFieldRight.textProperty().bind(textFieldLeft.textProperty());");
 		UFXBindings.bind(examplePane, editor);
 		rightTextField.textProperty().bind(leftTextField.textProperty());
 		examplePane.getChildren().add(editor);
@@ -92,7 +92,7 @@ public class Databinding implements Initializable {
 	private void switchToBidirectionalMode() {
 		titleLabel.setText("Databinding (Two-Way / Bidirectional)");
 		CodeEditor editor = new CodeEditor(
-				"TextField textFieldLeft; \n TextField textFieldRight; \n textFieldLeft.textProperty().bindBidirectional(textFieldRight.textProperty());");
+				"TextField textFieldLeft;\nTextField textFieldRight;\ntextFieldLeft.textProperty().bindBidirectional(textFieldRight.textProperty());");
 		UFXBindings.bind(examplePane, editor);
 		rightTextField.textProperty().bindBidirectional(
 				leftTextField.textProperty());
@@ -112,7 +112,7 @@ public class Databinding implements Initializable {
 				+ "\n\tprotected String computeValue() {"
 				+ "\n\\ttreturn String.valueOf(intProp.get());"
 				+ "\n\t}"
-				+ "\n});" + "intProp.set(#%i);";
+				+ "\n});" + "\n\nintProp.set(#%i);";
 		List<Property<?>> properties = new ArrayList<>();
 		final IntegerProperty targetProp = new SimpleIntegerProperty(50);
 		properties.add(targetProp);
@@ -134,10 +134,10 @@ public class Databinding implements Initializable {
 	private void switchToFluentAPIMode() {
 		titleLabel.setText("Databinding (Beispiel der Fluent-API)");
 		EditableCodeEditor codeEditor = new EditableCodeEditor();
-		String sourceCode = "IntegerProperty intProp = new SimpleIntegerProperty();\n"
-				+ "IntegerProperty secondIntProp = new SimpleIntegerProperty();\n"
-				+ "showPropety.bind(Bindings.subtract(#%i, targetProp).multiply(2).add(1));"
-				+ "intProp.set(#%i);";
+		String sourceCode = "IntegerProperty intProp = new SimpleIntegerProperty();"
+				+ "\nIntegerProperty secondIntProp = new SimpleIntegerProperty();"
+				+ "\nshowPropety.bind(Bindings.subtract(#%i, targetProp).multiply(2).add(1));"
+				+ "\n\nintProp.set(#%i);";
 		List<Property<?>> properties = new ArrayList<>();
 		final IntegerProperty targetProp = new SimpleIntegerProperty(1);
 		final IntegerProperty summandProp = new SimpleIntegerProperty(1);
@@ -163,7 +163,7 @@ public class Databinding implements Initializable {
 	}
 
 	private void switchToInfoMode() {
-
+		titleLabel.setText("Databinding - Zusammenfassung");
 	}
 
 	private void initButtonListeners() {
