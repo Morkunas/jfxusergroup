@@ -119,6 +119,7 @@ public class AnimatedBug extends Group {
 		return new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
+				arg0.consume();
 				bug.setImage(new Image(ClassLoader
 						.getSystemResourceAsStream("blood.png")));
 				transition.stop();
