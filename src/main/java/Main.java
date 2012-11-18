@@ -4,13 +4,19 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import de.saxsys.presentation.codeeditor.CodeEditor;
 import de.saxsys.presentation.pageslider.SlideComponent;
 import de.saxsys.presentation.pageslider.SlidePage;
+import de.saxsys.presentation.util.UFXBindings;
 
 public class Main extends Application {
 
@@ -24,10 +30,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		Pane pane = new Pane();
-		Scene scene = new Scene(pane, 600, 600);
-
-		pane.minWidthProperty().bind(scene.widthProperty());
-		pane.minHeightProperty().bind(scene.heightProperty());
+		AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("test.fxml"));
+		Scene scene = new Scene(page, 600, 600);
+		
+		UFXBindings.bind(scene, pane);
 
 		stage.setScene(scene);
 		stage.setTitle("Creating an Application Window");
@@ -39,31 +45,31 @@ public class Main extends Application {
 			public SlidePage createPage(int i) {
 				switch (i) {
 				case 0: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 1: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 2: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 3: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 4: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 5: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				case 6: {
-					SlidePage slidePage = createSlideComponent();
+					SlidePage slidePage = createSlideComponent(i);
 					return slidePage;
 				}
 				default:
@@ -71,26 +77,26 @@ public class Main extends Application {
 				}
 			}
 
-			private SlidePage createSlideComponent() {
+			private SlidePage createSlideComponent(int page) {
 				SlidePage slidePage = new SlidePage();
-//				Rectangle e = new Rectangle();
-//				e.setWidth(100);
-//				e.setHeight(100);
-//				slidePage.getChildren().add(e);
-				CodeEditor codeEditor = new CodeEditor();
-				String sourceCode = "public static void main(String[] args) {\n"
-						+ "\tRectangle r = RectangleBuilder.create().width(#%i).height(#%i).build();\n"
-						+ "}";
-				List<Property<?>> properties = new ArrayList<>();
-				properties.add(new SimpleIntegerProperty(50));
-				properties.add(new SimpleIntegerProperty(100));
-				codeEditor.displaySourceCode(sourceCode, properties);
-				slidePage.getChildren().add(codeEditor);
+				if (page == 0) {
+					
+				} else {
+					CodeEditor codeEditor = new CodeEditor();
+					String sourceCode = "public static void main(String[] args) {\n"
+							+ "\tRectangle r = RectangleBuilder.create().width(#%i).height(#%i).build();\n"
+							+ "}";
+					List<Property<?>> properties = new ArrayList<>();
+					properties.add(new SimpleIntegerProperty(50));
+					properties.add(new SimpleIntegerProperty(100));
+					codeEditor.displaySourceCode(sourceCode, properties);
+					slidePage.getChildren().add(codeEditor);
+				}
 				return slidePage;
+				
 			}
 		};
-		slideComponent.minWidthProperty().bind(stage.widthProperty());
-		slideComponent.minHeightProperty().bind(stage.heightProperty());
+		UFXBindings.bind(scene, slideComponent);
 		pane.getChildren().add(slideComponent);
 	}
 
