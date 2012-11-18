@@ -19,7 +19,7 @@ import org.junit.Test;
 
 public class CodeEditorTest {
 
-	private CodeEditor codeEditor;
+	private EditableCodeEditor codeEditor;
 
 	@Before
 	public void setup() {
@@ -29,7 +29,7 @@ public class CodeEditorTest {
 		List<Property<?>> properties = new ArrayList<>();
 		properties.add(new SimpleIntegerProperty(50));
 		properties.add(new SimpleIntegerProperty(100));
-		codeEditor = new CodeEditor();
+		codeEditor = new EditableCodeEditor();
 		codeEditor.displaySourceCode(sourceCode, properties);
 	}
 

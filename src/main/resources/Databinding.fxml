@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml" fx:controller="de.saxsys.presentation.slides.Databinding">
+  <children>
+    <Pane prefHeight="1080.0" prefWidth="1920.0">
+      <children>
+        <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" text="Databinding">
+          <font>
+            <Font size="30.0" />
+          </font>
+        </Label>
+        <Pane fx:id="examplePane" layoutX="14.0" layoutY="66.0" prefHeight="543.0" prefWidth="1892.0" style="-fx-background-color:lightgray&#10;;&#10;" />
+        <TextField fx:id="leftTextField" layoutX="14.0" layoutY="670.0" prefHeight="345.310546875" prefWidth="851.0" />
+        <TextField fx:id="rightTextField" layoutX="1055.0" layoutY="670.0" prefHeight="345.310546875" prefWidth="851.0" />
+        <Button fx:id="normalButton" layoutX="14.0" layoutY="1024.0" mnemonicParsing="false" prefHeight="48.310546875" prefWidth="209.0" text="Normal Databinding" />
+        <Button fx:id="biButton" layoutX="231.0" layoutY="1024.0" mnemonicParsing="false" prefHeight="48.310546875" prefWidth="209.0" text="Bidirectional Databinding" />
+        <Button id="biButton" fx:id="objbButton" layoutX="448.0" layoutY="1024.0" mnemonicParsing="false" prefHeight="48.310546875" prefWidth="209.0" text="Object Binding 1" />
+        <Button id="biButton" fx:id="fluentApiButton" layoutX="665.0" layoutY="1024.0" mnemonicParsing="false" prefHeight="48.310546875" prefWidth="209.0" text="API Beispiele" />
+        <Button id="biButton" fx:id="infoButton" layoutX="1697.0" layoutY="1024.0" mnemonicParsing="false" prefHeight="48.310546875" prefWidth="209.0" text="Zusammenfassung" />
+      </children>
+    </Pane>
+  </children>
+</StackPane>

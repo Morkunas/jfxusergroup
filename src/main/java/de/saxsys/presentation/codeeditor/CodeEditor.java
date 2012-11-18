@@ -1,112 +1,105 @@
 package de.saxsys.presentation.codeeditor;
 
-import java.util.List;
-
-import javafx.beans.binding.IntegerBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.util.converter.IntegerStringConverter;
-
-import org.apache.commons.lang.StringUtils;
+import javafx.event.EventHandler;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEvent;
+import javafx.scene.web.WebView;
 
 /**
- * A component to display source code that contains editable text fields that
- * are bound to properties.
+ * A syntax highlighting code editor for JavaFX created by wrapping a CodeMirror
+ * code editor in a WebView.
  * 
- * @author michael.thiele
- * 
+ * See http://codemirror.net for more information on using the codemirror
+ * editor.
  */
-public class CodeEditor extends VBox {
+public class CodeEditor extends StackPane {
+	/** a webview used to encapsulate the CodeMirror JavaScript. */
+	final WebView webview = new WebView();
 
-	private String[] javaKeywords = new String[] {
-		"public", "static", "void", "final", "if", "else", "private", "protected"
-	};
-	
 	/**
-	 * Displays the given source code with editable {@link TextField}s for the
-	 * given {@link Property}s. The source code can be formatted in the
-	 * following ways:
-	 * <ul>
-	 * <li>'\t' and other whitespace are displayed as is
-	 * <li>'\n' denotes the end of a line; will add a row in the display
-	 * {@link VBox}
-	 * <li>'#%i' will denote a placeholder for a property value; %i for
-	 * {@link IntegerProperty}s, %d for {@link DoubleProperty}s, etc.
-	 * <ul>
-	 * 
-	 * @param sourceCode
-	 *            the source code to display
-	 * @param changeableProperties
-	 *            a {@link List} of {@link Property}s that are displayed in the
-	 *            placeholders of the given source code
+	 * a snapshot of the code to be edited kept for easy initilization and
+	 * reversion of editable code.
 	 */
-	public void displaySourceCode(final String sourceCode,
-			final List<Property<?>> changeableProperties) {
+	private String editingCode;
 
-		// keep track of the changeableProperties
-		int indexOfChangeableProperties = 0;
+	/**
+	 * a template for editing code - this can be changed to any template derived
+	 * from the supported modes at http://codemirror.net to allow syntax
+	 * highlighted editing of a wide variety of languages.
+	 */
+	private final String editingTemplate = "<!doctype html>"
+			+ "<html>"
+			+ "<head>"
+			+ "  <link rel=\"stylesheet\" href=\"http://codemirror.net/lib/codemirror.css\">"
+			+ "  <script src=\"http://codemirror.net/lib/codemirror.js\"></script>"
+			+ "  <script src=\"http://codemirror.net/mode/clike/clike.js\"></script>"
+			+ "</head>"
+			+ "<body>"
+			+ "<form><textarea id=\"code\" name=\"code\">\n"
+			+ "${code}"
+			+ "</textarea></form>"
+			+ "<script>"
+			+ "  var editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {"
+			+ "    lineNumbers: true," + "    matchBrackets: true,"
+			+ "    onChange : function(e, t) {"
+			+ "      if (t.from.ch < t.to.ch)" + "        alert('backspace');"
+			+ "      else"
+			+ "        alert(t.text + ' ' + e.getTokenAt(t.to).string);"
+			+ "    }," + "    mode: \"text/x-java\"" + "  });" + "</script>"
+			+ "</body>" + "</html>";
 
-		for (final String codeLine : sourceCode.split("\n")) {
-			final HBox codeLineHBox = new HBox();
-			this.getChildren().add(codeLineHBox);
+	/**
+	 * applies the editing template to the editing code to create the
+	 * html+javascript source for a code editor.
+	 */
+	private String applyEditingTemplate() {
+		return editingTemplate.replace("${code}", editingCode);
+	}
 
-			for (final String inLine : StringUtils.splitPreserveAllTokens(
-					codeLine, "#")) {
-				String displayLine;
-				if (inLine.startsWith("%")) {
-					final TextField textFieldForProperty = initTextField(
-							inLine.substring(1, 2), changeableProperties,
-							indexOfChangeableProperties);
-					indexOfChangeableProperties += 1;
+	/**
+	 * sets the current code in the editor and creates an editing snapshot of
+	 * the code which can be reverted to.
+	 */
+	public void setCode(String newCode) {
+		this.editingCode = newCode;
+		webview.getEngine().loadContent(applyEditingTemplate());
+	}
 
-					codeLineHBox.getChildren().add(textFieldForProperty);
+	/**
+	 * returns the current code in the editor and updates an editing snapshot of
+	 * the code which can be reverted to.
+	 */
+	public String getCodeAndSnapshot() {
+		this.editingCode = (String) webview.getEngine().executeScript(
+				"editor.getValue();");
+		return editingCode;
+	}
 
-					displayLine = inLine.substring(2);
-				} else {
-					displayLine = inLine;
-				}
+	/** revert edits of the code to the last edit snapshot taken. */
+	public void revertEdits() {
+		setCode(editingCode);
+	}
 
-				
-				final Label inLineText = new Label();
-				inLineText.setText(displayLine);
-				codeLineHBox.getChildren().add(inLineText);
+	/**
+	 * Create a new code editor.
+	 * 
+	 * @param editingCode
+	 *            the initial code to be edited in the code editor.
+	 */
+	public CodeEditor(String editingCode) {
+		this.editingCode = editingCode;
 
+		webview.setPrefSize(650, 325);
+		webview.setMinSize(650, 325);
+		webview.getEngine().loadContent(applyEditingTemplate());
+
+		webview.getEngine().setOnAlert(new EventHandler<WebEvent<String>>() {
+			@Override
+			public void handle(WebEvent<String> event) {
+				System.out.println(event.getData());
 			}
+		});
 
-		}
+		this.getChildren().add(webview);
 	}
-
-	private TextField initTextField(final String type,
-			final List<Property<?>> changeableProperties,
-			int indexOfChangeableProperties) {
-		final TextField textFieldForProperty = new TextField();
-		final Property<?> property = changeableProperties
-				.get(indexOfChangeableProperties);
-		if (type.equals("i") && property.getValue() instanceof Integer) {
-			final Property<Integer> integerProperty = (Property<Integer>) property;
-			textFieldForProperty.textProperty().bindBidirectional(
-					integerProperty, new IntegerStringConverter());
-			IntegerBinding lengthBinding = new IntegerBinding() {
-				{
-					bind(integerProperty);
-				}
-
-				@Override
-				protected int computeValue() {
-					
-					return integerProperty == null ? 1 : (int) Math
-							.log10(integerProperty.getValue()) + 1;
-				}
-			};
-			textFieldForProperty.prefColumnCountProperty().bind(lengthBinding);
-		}
-
-		return textFieldForProperty;
-	}
-
 }

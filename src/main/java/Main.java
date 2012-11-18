@@ -1,20 +1,16 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.application.Application;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import de.saxsys.presentation.codeeditor.CodeEditor;
-import de.saxsys.presentation.elements.AnimatedBug;
 import de.saxsys.presentation.pageslider.SlideComponent;
 import de.saxsys.presentation.pageslider.SlidePage;
 import de.saxsys.presentation.util.UFXBindings;
+import de.saxsys.presentation.util.UFXScaler;
 
 public class Main extends Application {
 
@@ -89,17 +85,19 @@ public class Main extends Application {
 					}
 					slidePage.getChildren().add(blub);
 					return slidePage;
-				} else {
-					CodeEditor codeEditor = new CodeEditor();
-					String sourceCode = "public static void main(String[] args) {\n"
-							+ "\tRectangle r = RectangleBuilder.create().width(#%i).height(#%i).build();\n"
-							+ "}";
-					List<Property<?>> properties = new ArrayList<>();
-					properties.add(new SimpleIntegerProperty(50));
-					properties.add(new SimpleIntegerProperty(100));
-					codeEditor.displaySourceCode(sourceCode, properties);
-					slidePage.getChildren().add(codeEditor);
-					slidePage.getChildren().add(new AnimatedBug());
+				}
+
+				if (page == 1) {
+					StackPane blub = null;
+					try {
+						blub = (StackPane) FXMLLoader.load(Main.class
+								.getResource("Databinding.fxml"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					UFXScaler.scaleTo(slidePage, blub);
+					slidePage.getChildren().add(blub);
+					return slidePage;
 				}
 				return slidePage;
 
