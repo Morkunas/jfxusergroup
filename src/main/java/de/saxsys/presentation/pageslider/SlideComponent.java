@@ -3,8 +3,6 @@ package de.saxsys.presentation.pageslider;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.saxsys.presentation.util.UFXBindings;
-
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -13,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import de.saxsys.presentation.util.UFXBindings;
 
 /**
  * This Component is the implementation of the slideshow. To use it, implement
@@ -53,7 +52,6 @@ public abstract class SlideComponent extends Pane {
 			placeholder.setAlignment(Pos.CENTER);
 			placeHolderPanes.add(placeholder);
 			UFXBindings.bind(this, placeholder);
-
 			// Add content
 			placeholder.getChildren().add(createPage(i));
 
@@ -68,9 +66,9 @@ public abstract class SlideComponent extends Pane {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				if(arg0.getButton() == MouseButton.SECONDARY){
+				if (arg0.getButton() == MouseButton.SECONDARY) {
 					nextPage();
-				}else{
+				} else {
 					previousPage();
 				}
 			}
