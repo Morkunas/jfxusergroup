@@ -77,7 +77,6 @@ public abstract class SlideComponent extends Pane {
 				.getMinX()) * -1;
 		double newY = (placeHolderPanes.get(actualPage).getBoundsInParent()
 				.getMinY()) * -1;
-		System.out.println(newX + " " + newY);
 		TranslateTransitionBuilder.create().node(this)
 				.duration(Duration.seconds(0.5)).fromX(getTranslateX())
 				.fromY(getTranslateY()).toX(newX).toY(newY).build().play();
