@@ -7,15 +7,16 @@ import javafx.collections.ObservableList;
  * 6
  * 
  * @author Michael
- *
+ * 
  */
 public class Farm {
 
 	// TODO FXFarm
-	private final ObservableList<BeetReihe> beetReihe = FXCollections.emptyObservableList();
+	private final ObservableList<BeetReihe> beetReihe = FXCollections
+			.observableArrayList();
 
-	public ObservableList<BeetReihe> getBeetReihe() {
+	public ObservableList<BeetReihe> beetReiheProperty() {
 		return beetReihe;
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-package de.saxsys.fxarmville.model;
+package de.saxsys.fxarmville.model.fruits;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
@@ -31,7 +31,7 @@ public abstract class Anbaubar {
 	public DoubleProperty geldwertProperty() {
 		if (geldwertProperty == null) {
 			geldwertProperty = new SimpleDoubleProperty();
-			// TODO binding reifegrad <-> geldwert; faulige früchte sind nix
+			// TODO binding reifegrad <-> geldwert; faulige frï¿½chte sind nix
 			// wert!
 		}
 		return geldwertProperty;
