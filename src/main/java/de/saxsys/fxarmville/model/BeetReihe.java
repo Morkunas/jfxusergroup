@@ -1,8 +1,8 @@
 package de.saxsys.fxarmville.model;
 
-import de.saxsys.fxarmville.model.fruits.Anbaubar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import de.saxsys.fxarmville.model.fruits.Anbaubar;
 
 /**
  * 5

@@ -23,6 +23,7 @@ public class FXBeetReihe extends Parent {
 		for (Anbaubar anbaubar : beetReihe.waechstHierProperty()) {
 			FXAnbaubar fxAnbaubar = new FXAnbaubar(anbaubar);
 			reihe.getChildren().add(fxAnbaubar);
+
 		}
 		getChildren().add(reihe);
 	}
