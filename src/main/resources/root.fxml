@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="de.saxsys.fxarmville.RootController">
+  <children>
+    <HBox prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Pane fx:id="mainPane" prefHeight="500.0" prefWidth="608.0" />
+        <Pane prefHeight="500.0" prefWidth="212.0">
+          <children>
+            <Label fx:id="korb" alignment="CENTER" layoutX="23.0" layoutY="165.0" prefWidth="176.0" text="Körbchen" />
+            <Label id="korb" fx:id="anzahlReif" alignment="CENTER" layoutX="23.0" layoutY="50.0" prefWidth="176.0" text="Anzahl reifer Früchte" />
+            <Pane fx:id="statistik" layoutY="210.0" prefHeight="290.0" prefWidth="200.0" />
+          </children>
+        </Pane>
+      </children>
+    </HBox>
+  </children>
+</AnchorPane>

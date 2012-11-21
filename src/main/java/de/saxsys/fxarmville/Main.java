@@ -1,10 +1,10 @@
 package de.saxsys.fxarmville;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import de.saxsys.fxarmville.presentation.FXFarm;
 
 public class Main extends Application {
 
@@ -17,17 +17,14 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		Pane rootPane = new Pane();
-		// TODO rootpane background style zeugs in FXML
-		rootPane.setStyle("-fx-background-image:url(\"erde.jpg\");");
+		Pane rootPane = (Pane) FXMLLoader.load(Main.class
+				.getResource("/root.fxml"));
 
-		FXFarm farm = new FXFarm(DataMock.getData());
-		rootPane.getChildren().add(farm);
-
-		Scene rootScene = new Scene(rootPane, 700, 500);
+		Scene rootScene = new Scene(rootPane, 800, 500);
 
 		stage.setScene(rootScene);
 
+		stage.setTitle("FXarmVille");
 		stage.show();
 
 	}

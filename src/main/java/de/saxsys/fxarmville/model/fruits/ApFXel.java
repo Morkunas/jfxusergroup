@@ -1,5 +1,8 @@
 package de.saxsys.fxarmville.model.fruits;
 
+import de.saxsys.fxarmville.model.util.FruchtBildLader;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -10,24 +13,13 @@ import javafx.scene.image.Image;
  */
 public class ApFXel extends Anbaubar {
 
-	private Image apfxelImage;
-
 	public ApFXel() {
-		setGeldWert(0.42);
+		geldwertProperty = new SimpleDoubleProperty(0.42);
+		wachsdauerProperty = new SimpleIntegerProperty(5);
 	}
 
 	@Override
 	public Image getBild() {
-		if (apfxelImage == null) {
-			apfxelImage = new Image(
-					ClassLoader.getSystemResourceAsStream("apfxel.png"));
-		}
-		return apfxelImage;
+		return FruchtBildLader.getInstance().getBild("apfxel.png");
 	}
-
-	@Override
-	public int getWachsdauer() {
-		return 5;
-	}
-
 }

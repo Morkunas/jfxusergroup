@@ -1,5 +1,8 @@
 package de.saxsys.fxarmville.model;
 
+import de.saxsys.fxarmville.model.fruits.Anbaubar;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,12 +14,21 @@ import javafx.collections.ObservableList;
  */
 public class Farm {
 
-	// TODO FXFarm
-	private final ObservableList<BeetReihe> beetReihe = FXCollections
+	private ObjectProperty<Korb> korbProperty = new SimpleObjectProperty<Korb>(new Korb());
+	
+	private final ObservableList<Anbaubar> anbaubaresProperty = FXCollections
 			.observableArrayList();
 
-	public ObservableList<BeetReihe> beetReiheProperty() {
-		return beetReihe;
+	public ObservableList<Anbaubar> anbaubaresProperty() {
+		return anbaubaresProperty;
+	}
+	
+	public Korb getKorb() {
+		return korbProperty.get();
+	}
+	
+	public ObjectProperty<Korb> korbProperty() {
+		return korbProperty;
 	}
 
 }
