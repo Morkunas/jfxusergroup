@@ -20,7 +20,7 @@ public class ApFXelsine extends Anbaubar {
 	public Image getBild() {
 		if (bild == null) {
 			bild = new Image(
-					ClassLoader.getSystemResourceAsStream("apfxelsine.jpg"));
+					ClassLoader.getSystemResourceAsStream("apfxelsine.png"));
 		}
 		return bild;
 	}

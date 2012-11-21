@@ -7,6 +7,7 @@ import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.fruits.Anbaubar;
 import de.saxsys.fxarmville.model.fruits.ApFXel;
 import de.saxsys.fxarmville.model.fruits.ApFXelsine;
+import de.saxsys.fxarmville.model.fruits.Tomate;
 
 public class DataMock {
 
@@ -28,10 +29,15 @@ public class DataMock {
 
 	public static Anbaubar createRandomFruit() {
 		Random rand = new Random();
-		if (rand.nextBoolean()) {
+		switch (rand.nextInt(3)) {
+		case 0:
 			return new ApFXel();
-		} else {
+		case 1:
 			return new ApFXelsine();
+		case 2:
+			return new Tomate();
+		default:
+			return null;
 		}
 	}
 }
