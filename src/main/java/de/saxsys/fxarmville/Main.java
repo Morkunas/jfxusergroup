@@ -20,7 +20,7 @@ public class Main extends Application {
 		Pane rootPane = (Pane) FXMLLoader.load(Main.class
 				.getResource("/root.fxml"));
 
-		Scene rootScene = new Scene(rootPane, 800, 500);
+		Scene rootScene = new Scene(rootPane, 1000, 500);
 
 		stage.setScene(rootScene);
 

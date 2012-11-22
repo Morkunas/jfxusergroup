@@ -1,4 +1,6 @@
-package de.saxsys.presentation.elements;
+package de.saxsys.fxarmville.presentation;
+
+import java.util.Random;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
@@ -16,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -29,14 +30,17 @@ import javafx.util.Duration;
  * @author sialcasa
  * 
  */
-public class AnimatedBug extends Group {
+public class FXAnimatedBug extends Group {
 
 	private ImageView bug = new ImageView(new Image(
 			ClassLoader.getSystemResourceAsStream("bug.png")));
 
 	private PathTransition transition;
 
-	public AnimatedBug() {
+	public FXAnimatedBug() {
+		int size = new Random().nextInt(40) + 70;
+		bug.setFitHeight(size);
+		bug.setFitWidth(size);
 		// Füge Imageview als Kind zur Group (this)
 		this.getChildren().add(bug);
 		// Clicklistener - Ändert Bild von Bug zu Blut
@@ -51,16 +55,17 @@ public class AnimatedBug extends Group {
 		bug.setRotate(90);
 		// Erzeugen des Animation paths
 		Path path = new Path();
-		path.getElements().add(new MoveTo(0, 0));
-		path.getElements().add(new CubicCurveTo(250, 0, 250, 120, 200, 120));
-		path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 250, 240));
-		path.getElements().add(new CubicCurveTo(250, 0, 250, 120, 200, 120));
-		path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 250, 240));
+		path.getElements().add(new MoveTo(300, 300));
+		path.getElements().add(new CubicCurveTo(350, 0, 350, 200, 200, 200));
+		path.getElements().add(new CubicCurveTo(0, 200, 0, 240, 350, 240));
+		path.getElements().add(new CubicCurveTo(350, 0, 350, 200, 200, 200));
+		path.getElements().add(new CubicCurveTo(0, 200, 0, 240, 350, 240));
 
 		// Erstellen der Transition
+		int transitionDuration = new Random().nextInt(25) + 25;
 		transition = PathTransitionBuilder.create()
-				.duration(Duration.seconds(50)).node(this).path(path)
-				.orientation(OrientationType.ORTHOGONAL_TO_TANGENT)
+				.duration(Duration.seconds(transitionDuration)).node(this)
+				.path(path).orientation(OrientationType.ORTHOGONAL_TO_TANGENT)
 				.autoReverse(true).rate(5f).cycleCount(Timeline.INDEFINITE)
 				.build();
 
@@ -89,13 +94,18 @@ public class AnimatedBug extends Group {
 
 	private void fadeBugOut() {
 		FadeTransition fadeTransition = FadeTransitionBuilder.create()
-				.fromValue(1.0).node(AnimatedBug.this).toValue(0).rate(1f)
+				.fromValue(1.0).node(FXAnimatedBug.this).toValue(0).rate(1f)
 				.duration(Duration.seconds(2)).build();
 		fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				Pane parent = (Pane) getParent();
-				parent.getChildren().remove(AnimatedBug.this);
+				try {
+					FXFarm parent = (FXFarm) getParent();
+					parent.getChildren().remove(FXAnimatedBug.this);
+				} catch (Exception e) {
+					// Hier fliegen ab und zu exceptions auf die ich jetzt kein
+					// bock hab :P
+				}
 			}
 		});
 		fadeTransition.play();

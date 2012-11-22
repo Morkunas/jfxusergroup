@@ -1,16 +1,14 @@
 package de.saxsys.fxarmville.presentation;
 
+import javafx.animation.Animation.Status;
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
-import javafx.animation.PauseTransition;
-import javafx.animation.PauseTransitionBuilder;
-import javafx.animation.SequentialTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.effect.Glow;
@@ -18,101 +16,77 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import de.saxsys.fxarmville.model.Korb;
 import de.saxsys.fxarmville.model.fruits.Anbaubar;
 
 public class FXAnbaubar extends Parent {
 
-	private ImageView imageView;
+	private ImageView imageView = ImageViewBuilder.create().fitHeight(50)
+			.fitWidth(50).build();
+
 	private Anbaubar anbaubar;
-	private Korb korb;
 
-	private SequentialTransition lebenszyklus;
 	private BooleanProperty geerntetProperty = new SimpleBooleanProperty();
+	private BooleanProperty eingegangenProperty = new SimpleBooleanProperty();
 
-	public FXAnbaubar(Anbaubar anbaubar, Korb korb) {
+	public FXAnbaubar(Anbaubar anbaubar) {
+
 		this.anbaubar = anbaubar;
-		this.korb = korb;
-		imageView = ImageViewBuilder.create().image(anbaubar.getBild())
-				.fitHeight(50).fitWidth(50).build();
+
+		// Init
+		imageView.setImage(anbaubar.getBild());
 		getChildren().add(imageView);
+
+		// Erntelistener
+		createMouseListenerZumErnten();
+
+		// Starten
 		startWachstum();
-		createMouseListener();
 	}
 
 	private void startWachstum() {
-		// Schritt 1 Wachsen - Einscalen + Einfaden
-		final DoubleBinding volleReifung = anbaubar.reifegradProperty().divide(
-				anbaubar.wachsdauerProperty());
-		scaleXProperty().bind(volleReifung);
-		scaleYProperty().bind(volleReifung);
-		opacityProperty().bind(volleReifung.add(0.5));
+		// Prozentsatz der Reifung = Größe der Frucht
+		final DoubleBinding standDerReifung = anbaubar.reifegradProperty()
+				.divide(anbaubar.wachsdauerProperty());
+		scaleXProperty().bind(standDerReifung);
+		scaleYProperty().bind(standDerReifung);
 
+		// Wenn Frucht reif ist, bekommt sie glow
 		anbaubar.istReifProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> bean,
+					Boolean istReifAlt, Boolean istReifNeu) {
+				if (istReifNeu) {
+					setEffect(new Glow(10));
+				} else {
+					setEffect(null);
+				}
+			}
+		});
+
+		// Wenn frucht faulig ist, geht sie ein
+		anbaubar.istFauligProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0,
 					Boolean arg1, Boolean arg2) {
-				if (arg2) {
-					anbaubar.istReifProperty().removeListener(this);
-
-					scaleXProperty().unbind();
-					scaleYProperty().unbind();
-					opacityProperty().unbind();
-
-					// Reife
-					setEffect(new Glow(10));
-
-					// Schritt 2 Reif - Pause
-					PauseTransition pause = PauseTransitionBuilder.create()
-							.duration(Duration.seconds(1)).build();
-
-					// Schritt 3 Eingehen - Fade out
-					FadeTransition eingehen = FadeTransitionBuilder.create()
-							.node(FXAnbaubar.this).toValue(0.0)
-							.duration(Duration.seconds(1)).build();
-
-					// Wenn pause vorbei ist, geht frucht ein und verliert glow
-					pause.setOnFinished(createAnbaubarIstWelkHandler());
-
-					lebenszyklus = new SequentialTransition();
-					lebenszyklus.getChildren().addAll(pause, eingehen);
-					lebenszyklus.setOnFinished(createAnbaubarWaechstHandler());
-					lebenszyklus.play();
-				}
+				FadeTransition eingehen = FadeTransitionBuilder.create()
+						.node(FXAnbaubar.this).toValue(0.0)
+						.duration(Duration.seconds(1)).build();
+				eingehen.play();
+				// TRICK - HOHOHO , kein event on finisht nötig
+				eingegangenProperty.bind(Bindings.equal(
+						eingehen.statusProperty(), Status.STOPPED));
 			}
+
 		});
 	}
 
 	// Statistiken
-	// Highscore aus backend (service)
 
-	private EventHandler<ActionEvent> createAnbaubarIstWelkHandler() {
-		return new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				setEffect(null);
-			}
-		};
-	}
-
-	private EventHandler<ActionEvent> createAnbaubarWaechstHandler() {
-		return new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				neuerAnbau();
-			}
-		};
-	}
-
-	private void createMouseListener() {
+	private void createMouseListenerZumErnten() {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				korb.gesammeltProperty().add(anbaubar);
-				anbaubar.geerntet();
-				if (lebenszyklus != null) {
-					lebenszyklus.stop();
-				}
+				anbaubar.ernten();
 				neuerAnbau();
 			}
 		});
@@ -121,8 +95,13 @@ public class FXAnbaubar extends Parent {
 	private void neuerAnbau() {
 		geerntetProperty.set(true);
 	}
-	
+
 	public BooleanProperty geerntetProperty() {
 		return geerntetProperty;
 	}
+
+	public BooleanProperty eingegangenProperty() {
+		return eingegangenProperty;
+	}
+
 }

@@ -16,7 +16,7 @@ public class DataMock {
 		Farm farm = new Farm();
 
 		for (int beetCount = 0; beetCount < 100; beetCount++) {
-			farm.anbaubaresProperty().add(createRandomFruit());
+			farm.angebautProperty().add(createRandomFruit());
 		}
 
 		return farm;

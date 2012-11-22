@@ -30,18 +30,16 @@ public class RootController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		mainPane.setStyle("-fx-background-image:url(\"erde.jpg\");");
-
 		final Farm farm = DataMock.getData();
 		final FXFarm fxFarm = new FXFarm(farm);
 		mainPane.getChildren().add(fxFarm);
 
 		StringBinding anzahlDerReifenFruechte = new StringBinding() {
 			{
-				for (Anbaubar anbaubar : farm.anbaubaresProperty()) {
+				for (Anbaubar anbaubar : farm.angebautProperty()) {
 					bind(anbaubar.istReifProperty());
 				}
-				farm.anbaubaresProperty().addListener(
+				farm.angebautProperty().addListener(
 						new ListChangeListener<Anbaubar>() {
 							@Override
 							public void onChanged(
@@ -60,7 +58,7 @@ public class RootController implements Initializable {
 			@Override
 			protected String computeValue() {
 				int anzahlReiferFrüchte = 0;
-				for (Anbaubar anbaubar : farm.anbaubaresProperty()) {
+				for (Anbaubar anbaubar : farm.angebautProperty()) {
 					if (anbaubar.istReifProperty().get()) {
 						anzahlReiferFrüchte++;
 					}
