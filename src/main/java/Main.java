@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import de.saxsys.presentation.codeeditor.CodeEditor;
 import de.saxsys.presentation.pageslider.SlideComponent;
 import de.saxsys.presentation.pageslider.SlidePage;
 import de.saxsys.presentation.util.UFXBindings;
@@ -25,7 +26,8 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		Pane pane = new Pane();
 
-		Scene scene = new Scene(pane, 600, 600);
+		Scene scene = new Scene(pane, 1024, 768);
+		scene.getStylesheets().add("/layout.css");
 
 		UFXBindings.bind(scene, pane);
 
@@ -84,7 +86,6 @@ public class Main extends Application {
 						e.printStackTrace();
 					}
 					slidePage.getChildren().add(blub);
-					return slidePage;
 				}
 
 				if (page == 1) {
@@ -97,10 +98,14 @@ public class Main extends Application {
 					}
 					UFXScaler.scaleTo(slidePage, blub);
 					slidePage.getChildren().add(blub);
-					return slidePage;
 				}
-				return slidePage;
 
+				if (page == 2) {
+					CodeEditor codeEditor = new CodeEditor("public static void main(String[] args)");
+					slidePage.getChildren().add(codeEditor);
+				}
+				
+				return slidePage;
 			}
 		};
 		UFXBindings.bind(scene, slideComponent);

@@ -6,6 +6,7 @@ import javafx.animation.FadeTransitionBuilder;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -87,20 +88,16 @@ public class FXAnbaubar extends Parent {
 			@Override
 			public void handle(MouseEvent event) {
 				anbaubar.ernten();
-				neuerAnbau();
+				geerntetProperty.set(true);
 			}
 		});
 	}
 
-	private void neuerAnbau() {
-		geerntetProperty.set(true);
-	}
-
-	public BooleanProperty geerntetProperty() {
+	public ReadOnlyBooleanProperty geerntetProperty() {
 		return geerntetProperty;
 	}
 
-	public BooleanProperty eingegangenProperty() {
+	public ReadOnlyBooleanProperty eingegangenProperty() {
 		return eingegangenProperty;
 	}
 

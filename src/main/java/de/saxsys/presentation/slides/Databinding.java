@@ -110,7 +110,7 @@ public class Databinding implements Initializable {
 				+ "\n\t}"
 				+ "\n\n\t@Override"
 				+ "\n\tprotected String computeValue() {"
-				+ "\n\\ttreturn String.valueOf(intProp.get());"
+				+ "\n\t\treturn String.valueOf(intProp.get());"
 				+ "\n\t}"
 				+ "\n});" + "\n\nintProp.set(#%i);";
 		List<Property<?>> properties = new ArrayList<>();

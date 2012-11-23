@@ -11,7 +11,7 @@ public class UFXScaler {
 		to.scaleXProperty().bind(
 				from.widthProperty().divide(to.widthProperty()));
 		to.scaleYProperty().bind(
-				from.heightProperty().divide(to.heightProperty()));
+				from.widthProperty().divide(to.widthProperty()));
 	}
 
 }

@@ -14,6 +14,7 @@ import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.fruits.Anbaubar;
 import de.saxsys.fxarmville.presentation.FXFarm;
 
+// TODO vereinfachen?
 public class RootController implements Initializable {
 
 	@FXML
@@ -33,7 +34,8 @@ public class RootController implements Initializable {
 		final Farm farm = DataMock.getData();
 		final FXFarm fxFarm = new FXFarm(farm);
 		mainPane.getChildren().add(fxFarm);
-
+		
+		// TODO Farm zählt die Anzahl der Früchte
 		StringBinding anzahlDerReifenFruechte = new StringBinding() {
 			{
 				for (Anbaubar anbaubar : farm.angebautProperty()) {

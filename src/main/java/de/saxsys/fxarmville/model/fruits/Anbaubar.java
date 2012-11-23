@@ -112,7 +112,7 @@ public abstract class Anbaubar {
 
 			// Zeit wo die Frucht reif ist
 			PauseTransition istReif = new PauseTransition();
-			double reifeZeit = new Random(4).nextDouble() + 1.0;
+			double reifeZeit = new Random().nextDouble() * 4 + 1.0;
 			istReif.setDuration(Duration.seconds(reifeZeit));
 
 			// Leben starten

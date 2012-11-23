@@ -17,7 +17,10 @@ import de.saxsys.fxarmville.DataMock;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.fruits.Anbaubar;
 
-//TODO Eigendlich müsste die Logik zum adden / removen an einer bestimmten Stelle in die Farm
+//TODO Eigendlich müsste die Logik zum adden / removen an einer bestimmten Stelle in die Farm -> Listener auf Liste
+// TODO Refactoring von anbau neu und anbau an stelle (DataMock füllt nicht die Farm)#
+// TODO Frucht-Klassen entfernen
+// TODO Testen mit Jemmy: Jagd Bugs
 public class FXFarm extends Parent {
 
 	private VBox beetReihen = new VBox();
