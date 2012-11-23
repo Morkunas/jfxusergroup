@@ -1,14 +1,13 @@
 package de.saxsys.fxarmville.model;
 
-import de.saxsys.fxarmville.model.fruits.Anbaubar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Korb {
 
-	private ObservableList<Anbaubar> gesammeltProperty = FXCollections.observableArrayList();
+	private ObservableList<Frucht> gesammeltProperty = FXCollections.observableArrayList();
 	
-	public ObservableList<Anbaubar> gesammeltProperty() {
+	public ObservableList<Frucht> gesammeltProperty() {
 		return gesammeltProperty;
 	}
 	

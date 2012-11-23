@@ -1,6 +1,8 @@
-package de.saxsys.fxarmville.model.fruits;
+package de.saxsys.fxarmville.model;
 
 import java.util.Random;
+
+import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -30,19 +32,23 @@ import javafx.util.Duration;
  * @author Michael
  * 
  */
-public abstract class Anbaubar {
+public class Frucht {
 
-	protected IntegerProperty wachsdauerProperty = new SimpleIntegerProperty();
-	protected DoubleProperty reifegradProperty = new SimpleDoubleProperty();
-	protected BooleanProperty istReifProperty = new SimpleBooleanProperty();
-	protected BooleanProperty istFauligProperty = new SimpleBooleanProperty();
+	protected final IntegerProperty wachsdauerProperty = new SimpleIntegerProperty();
+	protected final DoubleProperty reifegradProperty = new SimpleDoubleProperty();
+	protected final BooleanProperty istReifProperty = new SimpleBooleanProperty();
+	protected final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
 
-	private LebensZyklus lebensZyklus = new LebensZyklus();
+	private final LebensZyklus lebensZyklus = new LebensZyklus();
+	private final String bildName;
 
-	public abstract Image getBild();
+	public Frucht(String bildName, int wachsdauer) {
+		this.bildName = bildName;
+		wachsdauerProperty.set(wachsdauer);
+	}
 
-	public Anbaubar() {
-
+	public Image getBild() {
+		return FruchtBildLader.getInstance().getBild(bildName);
 	}
 
 	public void baueAn() {
@@ -103,16 +109,19 @@ public abstract class Anbaubar {
 		public void wachse() {
 
 			// Wachstum
+			final Random random = new Random();
+			final double warteZeit = random.nextDouble() * 10;
 			Timeline reifung = TimelineBuilder
 					.create()
+					.delay(Duration.seconds(warteZeit))
 					.keyFrames(
 							new KeyFrame(Duration.seconds(getWachsdauer()),
 									new KeyValue(reifegradProperty,
 											getWachsdauer()))).build();
 
-			// Zeit wo die Frucht reif ist
+			// Zeit, wann die Frucht reif ist
 			PauseTransition istReif = new PauseTransition();
-			double reifeZeit = new Random().nextDouble() * 4 + 1.0;
+			double reifeZeit = random.nextDouble() * 4 + 1.0;
 			istReif.setDuration(Duration.seconds(reifeZeit));
 
 			// Leben starten
