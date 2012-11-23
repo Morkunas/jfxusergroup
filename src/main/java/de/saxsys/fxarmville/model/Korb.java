@@ -1,13 +1,14 @@
 package de.saxsys.fxarmville.model;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Korb {
 
-	private ObservableList<Frucht> gesammeltProperty = FXCollections.observableArrayList();
+	private ListProperty<Frucht> gesammeltProperty = new SimpleListProperty<>(FXCollections.<Frucht>observableArrayList());
 	
-	public ObservableList<Frucht> gesammeltProperty() {
+	public ListProperty<Frucht> gesammeltProperty() {
 		return gesammeltProperty;
 	}
 	
