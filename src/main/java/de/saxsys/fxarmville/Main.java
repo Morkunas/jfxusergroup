@@ -15,6 +15,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
+	// **** CODE FÜR FXML später hinzufügen ****
 	@Override
 	public void start(Stage stage) throws Exception {
 		Pane rootPane = (Pane) FXMLLoader.load(Main.class

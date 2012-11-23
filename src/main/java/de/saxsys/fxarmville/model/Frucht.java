@@ -26,15 +26,9 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
-/**
- * 1.
- * 
- * @author Michael
- * 
- */
 public class Frucht {
 
-	protected final IntegerProperty wachsdauerProperty = new SimpleIntegerProperty();
+	protected final IntegerProperty reifedauerProperty = new SimpleIntegerProperty();
 	protected final DoubleProperty reifegradProperty = new SimpleDoubleProperty();
 	protected final BooleanProperty istReifProperty = new SimpleBooleanProperty();
 	protected final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
@@ -42,9 +36,9 @@ public class Frucht {
 	private final LebensZyklus lebensZyklus = new LebensZyklus();
 	private final String bildName;
 
-	public Frucht(String bildName, int wachsdauer) {
+	public Frucht(String bildName, int reifedauer) {
 		this.bildName = bildName;
-		wachsdauerProperty.set(wachsdauer);
+		reifedauerProperty.set(reifedauer);
 	}
 
 	public Image getBild() {
@@ -52,9 +46,8 @@ public class Frucht {
 	}
 
 	public void baueAn() {
-		// Wenn reifegrad ist groesser als wachsdauer ist frucht reif
 		istReifProperty.bind(Bindings.greaterThanOrEqual(reifegradProperty,
-				wachsdauerProperty).and(Bindings.not(istFauligProperty)));
+				reifedauerProperty).and(Bindings.not(istFauligProperty)));
 		lebensZyklus.wachse();
 	}
 
@@ -66,11 +59,11 @@ public class Frucht {
 	 * WACHSDAUER
 	 */
 	public ReadOnlyIntegerProperty wachsdauerProperty() {
-		return wachsdauerProperty;
+		return reifedauerProperty;
 	}
 
 	public int getWachsdauer() {
-		return wachsdauerProperty.get();
+		return reifedauerProperty.get();
 	}
 
 	/*
@@ -107,6 +100,7 @@ public class Frucht {
 		private SequentialTransition lebensZyklus;
 
 		public void wachse() {
+			// **** BEGIN LIVE CODING ****
 
 			// Wachstum
 			final Random random = new Random();
@@ -121,7 +115,7 @@ public class Frucht {
 
 			// Zeit, wann die Frucht reif ist
 			PauseTransition istReif = new PauseTransition();
-			double reifeZeit = random.nextDouble() * 4 + 1.0;
+			double reifeZeit = random.nextDouble() * 3 + 1.0;
 			istReif.setDuration(Duration.seconds(reifeZeit));
 
 			// Leben starten
@@ -140,6 +134,7 @@ public class Frucht {
 				}
 			};
 		}
+		// **** END LIVE CODING ****
 
 		public void ernten() {
 			lebensZyklus.stop();

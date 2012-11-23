@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.presentation.FXarm;
 
+//**** BEGIN LIVE CODING ****
 public class RootController implements Initializable {
 
 	@FXML
@@ -48,3 +49,4 @@ public class RootController implements Initializable {
 	}
 
 }
+//**** END LIVE CODING ****

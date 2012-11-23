@@ -14,18 +14,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import de.saxsys.fxarmville.DataMock;
 
-/**
- * 6
- * 
- * @author Michael
- * 
- */
 public class Farm {
 
 	private final ObjectProperty<Korb> korbProperty = new SimpleObjectProperty<Korb>(
 			new Korb());
-	private final ListProperty<Frucht> angebautProperty = new SimpleListProperty<>(FXCollections
-			.<Frucht>observableArrayList());
+	private final ListProperty<Frucht> angebautProperty = new SimpleListProperty<>(
+			FXCollections.<Frucht> observableArrayList());
 	private final IntegerProperty anzahlReiferFruechteProperty = new SimpleIntegerProperty();
 
 	public Farm() {
@@ -41,41 +35,37 @@ public class Farm {
 
 	private Frucht erzeugeFrucht() {
 		final Frucht frucht = DataMock.erzeugeZufallsFrucht();
+		// **** BEGIN LIVE CODING ****
 		ChangeListener<Boolean> istReifListener = new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean arg1, Boolean arg2) {
-				if (arg2) {
-					anzahlReiferFruechteProperty.set(anzahlReiferFruechteProperty.get() + 1);
+			public void changed(ObservableValue<? extends Boolean> bean,
+					Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					anzahlReiferFruechteProperty
+							.set(anzahlReiferFruechteProperty.get() + 1);
 				} else {
-					anzahlReiferFruechteProperty.set(anzahlReiferFruechteProperty.get() - 1);
+					anzahlReiferFruechteProperty
+							.set(anzahlReiferFruechteProperty.get() - 1);
 				}
 			}
 		};
 		frucht.istReifProperty().addListener(istReifListener);
+		// **** END LIVE CODING ****
 		return frucht;
 	}
-	
+
 	public void ernteFrucht(Frucht frucht) {
 		getKorb().gesammeltProperty().add(frucht);
-		ersetzteFrucht(frucht);
+		ersetzeFrucht(frucht);
 	}
-	
-	public void ersetzteFrucht(Frucht frucht) {
+
+	public void ersetzeFrucht(Frucht frucht) {
 		int indexFrucht = angebautProperty.indexOf(frucht);
 		if (indexFrucht == -1) {
 			// Frucht schon nicht mehr da
 			return;
 		}
 		angebautProperty.set(indexFrucht, erzeugeFrucht());
-	}
-	
-	public ReadOnlyIntegerProperty anzahlReiferFruechteProperty() {
-		return anzahlReiferFruechteProperty;
-	}
-	
-	public ReadOnlyListProperty<Frucht> angebautProperty() {
-		return angebautProperty;
 	}
 
 	public Korb getKorb() {
@@ -84,6 +74,14 @@ public class Farm {
 
 	public ReadOnlyObjectProperty<Korb> korbProperty() {
 		return korbProperty;
+	}
+
+	public ReadOnlyListProperty<Frucht> angebautProperty() {
+		return angebautProperty;
+	}
+
+	public ReadOnlyIntegerProperty anzahlReiferFruechteProperty() {
+		return anzahlReiferFruechteProperty;
 	}
 
 }

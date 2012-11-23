@@ -46,6 +46,7 @@ public class FXrucht extends Parent {
 	}
 
 	private void starteWachstum() {
+		// **** BEGIN LIVE CODING ****
 		// Prozentsatz der Reifung = Größe der Frucht
 		final DoubleBinding standDerReifung = frucht.reifegradProperty()
 				.divide(frucht.wachsdauerProperty());
@@ -80,10 +81,10 @@ public class FXrucht extends Parent {
 			}
 
 		});
+		// **** END LIVE CODING ****
 	}
 
-	// Statistiken
-
+	// **** BEGIN LIVE CODING ****
 	private void erzeugeMouseListenerZumErnten() {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -93,6 +94,7 @@ public class FXrucht extends Parent {
 			}
 		});
 	}
+	// **** END LIVE CODING ****
 
 	public ReadOnlyBooleanProperty geerntetProperty() {
 		return geerntetProperty;

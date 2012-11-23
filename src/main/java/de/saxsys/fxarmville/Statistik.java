@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
 
+//**** NUR ZEIGEN ****
 public class Statistik extends Pane {
 
 	private Farm farm;
@@ -44,7 +45,6 @@ public class Statistik extends Pane {
 			}
 		});
 		PieChart statistik = new PieChart(data);
-		statistik.maxHeightProperty().bind(heightProperty());
 		getChildren().add(statistik);
 	}
 

@@ -32,6 +32,7 @@ public class FXarm extends Parent {
 		startBugs();
 	}
 
+	// **** BEGIN LIVE CODING ****
 	private void startBugs() {
 
 		TimelineBuilder
@@ -46,8 +47,10 @@ public class FXarm extends Parent {
 								})).cycleCount(Timeline.INDEFINITE).build()
 				.play();
 	}
+	// **** END LIVE CODING ****
 
 	private void initBeet() {
+		// **** BEGIN LIVE CODING ****
 		HBox reihe = null;
 		for (int i = 0; i < farm.angebautProperty().size(); i++) {
 			if (i % 10 == 0) {
@@ -57,8 +60,10 @@ public class FXarm extends Parent {
 			}
 		}
 		getChildren().add(beetReihenVertikal);
-
+		// **** END LIVE CODING ****
+		
 		// aufs Modell lauschen
+		// **** BEGIN LIVE CODING ****
 		ObservableList<Frucht> fruechte = FXCollections.observableArrayList();
 		fruechte.addListener(new ListChangeListener<Frucht>() {
 			@Override
@@ -88,12 +93,14 @@ public class FXarm extends Parent {
 			}
 		});
 		Bindings.bindContent(fruechte, farm.angebautProperty());
+		// **** END LIVE CODING ****
 	}
 
 	/*
 	 * Wenn frucht geerntet wurde wird sie in den Korb gelegt und eine neue
 	 * Frucht and der selben Stelle erstellt
 	 */
+	// **** BEGIN LIVE CODING ****
 	private ChangeListener<Boolean> neueFruchtHandler(final Frucht frucht,
 			final boolean geerntet) {
 		return new ChangeListener<Boolean>() {
@@ -103,11 +110,12 @@ public class FXarm extends Parent {
 				if (geerntet) {
 					farm.ernteFrucht(frucht);
 				} else {
-					farm.ersetzteFrucht(frucht);
+					farm.ersetzeFrucht(frucht);
 				}
 			}
 		};
 	}
+	// **** END LIVE CODING ****
 
 	@Override
 	public ObservableList<Node> getChildren() {
