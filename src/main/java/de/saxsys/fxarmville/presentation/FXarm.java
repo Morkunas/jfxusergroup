@@ -47,6 +47,7 @@ public class FXarm extends Parent {
 								})).cycleCount(Timeline.INDEFINITE).build()
 				.play();
 	}
+
 	// **** END LIVE CODING ****
 
 	private void initBeet() {
@@ -61,7 +62,7 @@ public class FXarm extends Parent {
 		}
 		getChildren().add(beetReihenVertikal);
 		// **** END LIVE CODING ****
-		
+
 		// aufs Modell lauschen
 		// **** BEGIN LIVE CODING ****
 		ObservableList<Frucht> fruechte = FXCollections.observableArrayList();
@@ -115,6 +116,7 @@ public class FXarm extends Parent {
 			}
 		};
 	}
+
 	// **** END LIVE CODING ****
 
 	@Override

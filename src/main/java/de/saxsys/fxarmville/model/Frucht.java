@@ -2,8 +2,6 @@ package de.saxsys.fxarmville.model;
 
 import java.util.Random;
 
-import de.saxsys.fxarmville.model.util.FruchtBildLader;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
@@ -25,13 +23,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
+import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 public class Frucht {
 
-	protected final IntegerProperty reifedauerProperty = new SimpleIntegerProperty();
-	protected final DoubleProperty reifegradProperty = new SimpleDoubleProperty();
-	protected final BooleanProperty istReifProperty = new SimpleBooleanProperty();
-	protected final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
+	private final IntegerProperty reifedauerProperty = new SimpleIntegerProperty();
+	private final DoubleProperty reifegradProperty = new SimpleDoubleProperty();
+	private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
+	private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
 
 	private final LebensZyklus lebensZyklus = new LebensZyklus();
 	private final String bildName;
@@ -134,6 +133,7 @@ public class Frucht {
 				}
 			};
 		}
+
 		// **** END LIVE CODING ****
 
 		public void ernten() {

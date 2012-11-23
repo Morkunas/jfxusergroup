@@ -1,6 +1,7 @@
 package de.saxsys.fxarmville;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,9 +18,9 @@ public class Main extends Application {
 	// **** CODE FÜR FXML später hinzufügen ****
 	@Override
 	public void start(Stage stage) throws Exception {
-		// Pane rootPane = (Pane) FXMLLoader.load(Main.class
-		// .getResource("/root.fxml"));
-		Pane rootPane = new FXMultitouchExample();
+		Pane rootPane = (Pane) FXMLLoader.load(Main.class
+				.getResource("/root.fxml"));
+		// Pane rootPane = new FXMultitouchExample();
 
 		Scene rootScene = new Scene(rootPane, 1000, 500);
 
