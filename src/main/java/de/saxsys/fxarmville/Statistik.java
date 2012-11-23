@@ -7,8 +7,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.layout.Pane;
 import de.saxsys.fxarmville.model.Farm;
-import de.saxsys.fxarmville.model.fruits.Anbaubar;
+import de.saxsys.fxarmville.model.Frucht;
 
+//**** NUR ZEIGEN ****
 public class Statistik extends Pane {
 
 	private Farm farm;
@@ -21,15 +22,15 @@ public class Statistik extends Pane {
 	private void init() {
 		final ObservableList<Data> data = FXCollections.observableArrayList(new Data(
 				"reif", 0), new Data("unreif", 0), new Data("faulig", 0));
-		farm.getKorb().gesammeltProperty().addListener(new ListChangeListener<Anbaubar>() {
+		farm.getKorb().gesammeltProperty().addListener(new ListChangeListener<Frucht>() {
 			@Override
 			public void onChanged(
-					javafx.collections.ListChangeListener.Change<? extends Anbaubar> c) {
+					javafx.collections.ListChangeListener.Change<? extends Frucht> c) {
 				c.next();
 				int reif = 0;
 				int unreif = 0;
 				int faulig = 0;
-				for (Anbaubar imKorb : c.getList()) {
+				for (Frucht imKorb : c.getList()) {
 					if (imKorb.istReifProperty().get()) {
 						reif++;
 					} else if (imKorb.istFauligProperty().get()) {
@@ -44,7 +45,6 @@ public class Statistik extends Pane {
 			}
 		});
 		PieChart statistik = new PieChart(data);
-		statistik.maxHeightProperty().bind(heightProperty());
 		getChildren().add(statistik);
 	}
 

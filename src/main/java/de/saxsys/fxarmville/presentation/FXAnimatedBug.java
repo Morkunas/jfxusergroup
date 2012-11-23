@@ -100,7 +100,7 @@ public class FXAnimatedBug extends Group {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					FXFarm parent = (FXFarm) getParent();
+					FXarm parent = (FXarm) getParent();
 					parent.getChildren().remove(FXAnimatedBug.this);
 				} catch (Exception e) {
 					// Hier fliegen ab und zu exceptions auf die ich jetzt kein
