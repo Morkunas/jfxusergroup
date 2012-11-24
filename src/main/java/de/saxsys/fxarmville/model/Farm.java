@@ -66,6 +66,11 @@ public class Farm {
 			return;
 		}
 		angebautProperty.set(indexFrucht, erzeugeFrucht());
+		// **** BEGIN LIVE CODING ****
+		if (frucht.istReifProperty().get()) {
+			anzahlReiferFruechteProperty.set(anzahlReiferFruechteProperty.get() - 1);
+		}
+		// **** END LIVE CODING ****
 	}
 
 	public Korb getKorb() {
