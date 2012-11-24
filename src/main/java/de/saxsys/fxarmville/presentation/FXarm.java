@@ -25,6 +25,7 @@ public class FXarm extends Parent {
 
 	private Farm farm;
 	private VBox beetReihenVertikal = new VBox();
+	private ObservableList<Frucht> fruechte;
 
 	public FXarm(final Farm farm) {
 		this.farm = farm;
@@ -63,10 +64,8 @@ public class FXarm extends Parent {
 		getChildren().add(beetReihenVertikal);
 		// **** END LIVE CODING ****
 
-		// aufs Modell lauschen
-		// **** BEGIN LIVE CODING ****
-		ObservableList<Frucht> fruechte = FXCollections.observableArrayList();
-		fruechte.addListener(new ListChangeListener<Frucht>() {
+		fruechte = FXCollections.observableArrayList();
+		ListChangeListener<Frucht> listChangeListener = new ListChangeListener<Frucht>() {
 			@Override
 			public void onChanged(
 					javafx.collections.ListChangeListener.Change<? extends Frucht> c) {
@@ -92,7 +91,8 @@ public class FXarm extends Parent {
 					}
 				}
 			}
-		});
+		};
+		fruechte.addListener(listChangeListener);
 		Bindings.bindContent(fruechte, farm.angebautProperty());
 		// **** END LIVE CODING ****
 	}

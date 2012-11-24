@@ -12,13 +12,10 @@ import javafx.animation.TimelineBuilder;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -27,7 +24,7 @@ import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 public class Frucht {
 
-	private final IntegerProperty reifedauerProperty = new SimpleIntegerProperty();
+	private final DoubleProperty reifedauerProperty = new SimpleDoubleProperty();
 	private final DoubleProperty reifegradProperty = new SimpleDoubleProperty();
 	private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
 	private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
@@ -35,7 +32,7 @@ public class Frucht {
 	private final LebensZyklus lebensZyklus = new LebensZyklus();
 	private final String bildName;
 
-	public Frucht(String bildName, int reifedauer) {
+	public Frucht(String bildName, double reifedauer) {
 		this.bildName = bildName;
 		reifedauerProperty.set(reifedauer);
 	}
@@ -57,11 +54,11 @@ public class Frucht {
 	/*
 	 * WACHSDAUER
 	 */
-	public ReadOnlyIntegerProperty wachsdauerProperty() {
+	public ReadOnlyDoubleProperty wachsdauerProperty() {
 		return reifedauerProperty;
 	}
 
-	public int getWachsdauer() {
+	public double getWachsdauer() {
 		return reifedauerProperty.get();
 	}
 
