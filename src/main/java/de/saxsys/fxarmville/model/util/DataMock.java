@@ -1,4 +1,4 @@
-package de.saxsys.fxarmville;
+package de.saxsys.fxarmville.model.util;
 
 import java.util.Random;
 

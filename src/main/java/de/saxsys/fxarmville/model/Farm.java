@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import de.saxsys.fxarmville.DataMock;
+import de.saxsys.fxarmville.model.util.DataMock;
 
 public class Farm {
 
