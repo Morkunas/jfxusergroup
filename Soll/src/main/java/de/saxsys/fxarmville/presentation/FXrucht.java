@@ -1,13 +1,8 @@
 package de.saxsys.fxarmville.presentation;
 
-import javafx.animation.Animation.Status;
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -27,9 +22,6 @@ public class FXrucht extends Parent {
 
 	private Frucht frucht;
 
-	private BooleanProperty geerntetProperty = new SimpleBooleanProperty();
-	private BooleanProperty eingegangenProperty = new SimpleBooleanProperty();
-
 	public FXrucht(Frucht frucht) {
 
 		this.frucht = frucht;
@@ -45,9 +37,19 @@ public class FXrucht extends Parent {
 		starteWachstum();
 	}
 
+	// **** BEGIN LIVE CODING ****
+	private void erzeugeMouseListenerZumErnten() {
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				frucht.ernten();
+			}
+		});
+	}
+
+	// END
+
 	private void starteWachstum() {
-		// **** BEGIN LIVE CODING ****
-		// Prozentsatz der Reifung = Größe der Frucht
 		final DoubleBinding standDerReifung = frucht.reifegradProperty()
 				.divide(frucht.wachsdauerProperty());
 		scaleXProperty().bind(standDerReifung);
@@ -56,9 +58,9 @@ public class FXrucht extends Parent {
 		// Wenn Frucht reif ist, bekommt sie glow
 		frucht.istReifProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> bean,
-					Boolean istReifAlt, Boolean istReifNeu) {
-				if (istReifNeu) {
+			public void changed(ObservableValue<? extends Boolean> arg0,
+					Boolean alterWert, Boolean neuerWert) {
+				if (neuerWert) {
 					setEffect(new Glow(10));
 				} else {
 					setEffect(null);
@@ -66,42 +68,17 @@ public class FXrucht extends Parent {
 			}
 		});
 
-		// Wenn frucht faulig ist, geht sie ein
+		// Wenn sie faulig wird
 		frucht.istFauligProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0,
 					Boolean arg1, Boolean arg2) {
 				FadeTransition eingehen = FadeTransitionBuilder.create()
-						.node(FXrucht.this).toValue(0.0)
-						.duration(Duration.seconds(1)).build();
+						.duration(Duration.seconds(frucht.getWachsdauer()))
+						.node(FXrucht.this).toValue(0.0).build();
 				eingehen.play();
-				// TRICK - HOHOHO , kein event on finisht nötig
-				eingegangenProperty.bind(Bindings.equal(
-						eingehen.statusProperty(), Status.STOPPED));
-			}
-
-		});
-		// **** END LIVE CODING ****
-	}
-
-	// **** BEGIN LIVE CODING ****
-	private void erzeugeMouseListenerZumErnten() {
-		setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				frucht.ernten();
-				geerntetProperty.set(true);
 			}
 		});
-	}
-	// **** END LIVE CODING ****
-
-	public ReadOnlyBooleanProperty geerntetProperty() {
-		return geerntetProperty;
-	}
-
-	public ReadOnlyBooleanProperty eingegangenProperty() {
-		return eingegangenProperty;
 	}
 
 }

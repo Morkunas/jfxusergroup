@@ -17,16 +17,15 @@ public class FXarmVilleStarter extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		// Pane rootPane = (Pane) FXMLLoader.load(FXarmVilleStarter.class
-		// .getResource("/root.fxml"));
 
-		final Farm farm = new Farm();
-		final FXarm fxFarm = new FXarm(farm);
+		Farm farm = new Farm();
+		FXarm fxArm = new FXarm(farm);
 
-		Scene rootScene = new Scene(fxFarm, 1000, 500);
+		Scene rootScene = new Scene(fxArm, 500, 500);
+		rootScene.getStylesheets().add(
+				ClassLoader.getSystemResource("style.css").toString());
 
 		stage.setScene(rootScene);
-
 		stage.setTitle("FXarmVille");
 		stage.show();
 	}

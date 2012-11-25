@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,7 +20,7 @@ import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
 
 // TODO Testen mit Jemmy: Jagd Bugs
-public class FXarm extends Parent {
+public class FXarm extends Pane {
 
 	private Farm farm;
 	private VBox beetReihenVertikal = new VBox();
@@ -29,6 +28,7 @@ public class FXarm extends Parent {
 
 	public FXarm(final Farm farm) {
 		this.farm = farm;
+		this.setId("FXarm");
 		initBeet();
 		startBugs();
 	}
@@ -75,9 +75,9 @@ public class FXarm extends Parent {
 					if (c.wasAdded()) {
 						Frucht frucht = c.getList().get(index);
 						FXrucht fXrucht = new FXrucht(frucht);
-						fXrucht.eingegangenProperty().addListener(
+						frucht.istEingegangenProperty().addListener(
 								neueFruchtHandler(frucht, false));
-						fXrucht.geerntetProperty().addListener(
+						frucht.istGeerntetWordenProperty().addListener(
 								neueFruchtHandler(frucht, true));
 						frucht.baueAn();
 						// ein bissl hässlich: die richtige Zelle finden
@@ -92,16 +92,12 @@ public class FXarm extends Parent {
 				}
 			}
 		};
+
 		fruechte.addListener(listChangeListener);
 		Bindings.bindContent(fruechte, farm.angebautProperty());
-		// **** END LIVE CODING ****
+		// END
 	}
 
-	/*
-	 * Wenn frucht geerntet wurde wird sie in den Korb gelegt und eine neue
-	 * Frucht and der selben Stelle erstellt
-	 */
-	// **** BEGIN LIVE CODING ****
 	private ChangeListener<Boolean> neueFruchtHandler(final Frucht frucht,
 			final boolean geerntet) {
 		return new ChangeListener<Boolean>() {
@@ -116,8 +112,6 @@ public class FXarm extends Parent {
 			}
 		};
 	}
-
-	// **** END LIVE CODING ****
 
 	@Override
 	public ObservableList<Node> getChildren() {

@@ -27,13 +27,15 @@ public class RootController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		final Farm farm = new Farm();
-		final FXarm fxFarm = new FXarm(farm);
-		mainPane.getChildren().add(fxFarm);
-		
-		anzahlReif.textProperty().bind(
-				Bindings.concat("Reife Früchte: ", farm.anzahlReiferFruechteProperty()));
+		FXarm fXarm = new FXarm(farm);
 
-		StringBinding anzahlGesammelt = new StringBinding() {
+		mainPane.getChildren().add(fXarm);
+
+		anzahlReif.textProperty().bind(
+				Bindings.concat("# reife Früchte: ",
+						farm.anzahlReiferFruechteProperty()));
+
+		StringBinding korbBinding = new StringBinding() {
 			{
 				bind(farm.getKorb().gesammeltProperty());
 			}
@@ -43,10 +45,10 @@ public class RootController implements Initializable {
 				return "Im Korb: " + farm.getKorb().gesammeltProperty().size();
 			}
 		};
-		korb.textProperty().bind(anzahlGesammelt);
-
+		korb.textProperty().bind(korbBinding);
+		fXarm.maxWidthProperty().bind(mainPane.widthProperty());
 		statistik.getChildren().add(new Statistik(farm));
 	}
 
 }
-//**** END LIVE CODING ****
+// **** END LIVE CODING ****
