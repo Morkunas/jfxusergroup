@@ -9,6 +9,8 @@ import javafx.animation.RotateTransitionBuilder;
 import javafx.animation.ScaleTransitionBuilder;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.InsetsBuilder;
 import javafx.geometry.Pos;
@@ -104,7 +106,7 @@ public class StartPage extends Application {
 						rows.get(row).get(col).setOn(RND.nextInt(2) == 1);
 					}
 				}
-				//RADIAL
+				// RADIAL
 				radial1.setValue(RND.nextDouble() * 100);
 				if (counter > 8) {
 					// BATTERY
@@ -132,6 +134,11 @@ public class StartPage extends Application {
 	private Radial radial1;
 
 	private void initRoot(GridPane rootPane) {
+		rootPane.setOnMouseReleased(new EventHandler<Event>() {
+			public void handle(Event arg0) {
+				System.exit(0);
+			}
+		});
 		initLcd(rootPane);
 		initLed(rootPane);
 		initClock(rootPane);
@@ -156,8 +163,9 @@ public class StartPage extends Application {
 				.contents(
 						new Content[] {
 								new ContentBuilder().create()
-										.color(MatrixColor.GREEN).type(Type.TEXT)
-										.origin(0, 1).area(0, 0, 96, 34)
+										.color(MatrixColor.GREEN)
+										.type(Type.TEXT).origin(0, 1)
+										.area(0, 0, 96, 34)
 										.txtContent("JavaFX")
 										.font(MatrixFont.FF_15x32)
 										.fontGap(Gap.SIMPLE).align(Align.LEFT)
@@ -182,7 +190,7 @@ public class StartPage extends Application {
 
 				.build();
 		rootPane.add(matrixPanel, 1, 1);
-		
+
 	}
 
 	private void initRadial(GridPane rootPane) {
