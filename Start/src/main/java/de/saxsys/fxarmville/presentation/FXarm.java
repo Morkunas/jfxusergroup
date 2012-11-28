@@ -19,7 +19,6 @@ import javafx.util.Duration;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
 
-// TODO Testen mit Jemmy: Jagd Bugs
 public class FXarm extends Pane {
 
 	private Farm farm;
@@ -41,7 +40,6 @@ public class FXarm extends Pane {
 	// **** END LIVE CODING ****
 
 	private void initBeet() {
-		// **** BEGIN LIVE CODING ****
 		HBox reihe = null;
 		for (int i = 0; i < farm.angebautProperty().size(); i++) {
 			if (i % 10 == 0) {
@@ -51,7 +49,6 @@ public class FXarm extends Pane {
 			}
 		}
 		getChildren().add(beetReihenVertikal);
-		// **** END LIVE CODING ****
 
 		fruechte = FXCollections.observableArrayList();
 		ListChangeListener<Frucht> listChangeListener = new ListChangeListener<Frucht>() {
@@ -84,7 +81,6 @@ public class FXarm extends Pane {
 
 		fruechte.addListener(listChangeListener);
 		Bindings.bindContent(fruechte, farm.angebautProperty());
-		// END
 	}
 
 	private ChangeListener<Boolean> neueFruchtHandler(final Frucht frucht,
