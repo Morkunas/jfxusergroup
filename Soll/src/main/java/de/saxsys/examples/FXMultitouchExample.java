@@ -91,8 +91,14 @@ public class FXMultitouchExample extends Pane {
             @Override
             public void handle(final TouchEvent touchEvent) {
                 if (touchArmed.get()) {
-                    media.setTranslateX(touchEvent.getTouchPoint().getSceneX() - media.getWidth() / 2);
-                    media.setTranslateY(touchEvent.getTouchPoint().getSceneY() - media.getHeight() / 2);
+                    TouchPoint exactPoint = null;
+                    for (final TouchPoint touch : touchEvent.getTouchPoints()) {
+                        if (exactPoint == null || touch.getX() > exactPoint.getX()) {
+                            exactPoint = touch;
+                        }
+                    }
+                    media.setTranslateX(exactPoint.getSceneX() - media.getWidth() / 2);
+                    media.setTranslateY(exactPoint.getSceneY() - media.getHeight() / 2);
                     touchEvent.consume();
                 }
             }

@@ -21,132 +21,130 @@ import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 public class Frucht {
 
-	// Zeit für Reifung / Faulung
-	private final DoubleProperty reifedauerProperty = new SimpleDoubleProperty();
+    // Zeit für Reifung / Faulung
+    private final DoubleProperty reifedauerProperty = new SimpleDoubleProperty();
 
-	// Aktuelle Reifedauer
-	private final DoubleProperty aktuelleReifeDauerProperty = new SimpleDoubleProperty();
+    // Aktuelle Reifedauer
+    private final DoubleProperty aktuelleReifeDauerProperty = new SimpleDoubleProperty();
 
-	/*
-	 * Lebensabschnitte
-	 */
-	private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istEingegangenProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istGeerntetWordenProperty = new SimpleBooleanProperty();
+    /*
+     * Lebensabschnitte
+     */
+    private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
+    private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
+    private final BooleanProperty istEingegangenProperty = new SimpleBooleanProperty();
+    private final BooleanProperty istGeerntetWordenProperty = new SimpleBooleanProperty();
 
-	private final LebensZyklus lebensZyklus = new LebensZyklus();
-	private final String bildName;
+    private final LebensZyklus lebensZyklus = new LebensZyklus();
+    private final String bildName;
 
-	public Frucht(String bildName, double reifedauer) {
-		this.bildName = bildName;
-		reifedauerProperty.set(reifedauer);
-	}
+    public Frucht(final String bildName, final double reifedauer) {
+        this.bildName = bildName;
+        reifedauerProperty.set(reifedauer);
+    }
 
-	public Image getBild() {
-		return FruchtBildLader.getInstance().getBild(bildName);
-	}
+    public Image getBild() {
+        return FruchtBildLader.getInstance().getBild(bildName);
+    }
 
-	public void baueAn() {
-		// FIXME
-		istReifProperty.bind(Bindings.not(istFauligProperty).and(
-				Bindings.greaterThanOrEqual(aktuelleReifeDauerProperty,
-						reifedauerProperty)));
-		lebensZyklus.wachse();
-	}
+    public void baueAn() {
+        // FIXME
+        istReifProperty.bind(Bindings.not(istFauligProperty).and(
+                Bindings.greaterThanOrEqual(aktuelleReifeDauerProperty, reifedauerProperty)));
+        lebensZyklus.wachse();
+    }
 
-	public void ernten() {
-		lebensZyklus.ernten();
-		istGeerntetWordenProperty.set(true);
-	}
+    public void ernten() {
+        lebensZyklus.ernten();
+        istGeerntetWordenProperty.set(true);
+    }
 
-	/*
-	 * WACHSDAUER
-	 */
-	public ReadOnlyDoubleProperty wachsdauerProperty() {
-		return reifedauerProperty;
-	}
+    /*
+     * WACHSDAUER
+     */
+    public ReadOnlyDoubleProperty wachsdauerProperty() {
+        return reifedauerProperty;
+    }
 
-	public double getWachsdauer() {
-		return reifedauerProperty.get();
-	}
+    public double getWachsdauer() {
+        return reifedauerProperty.get();
+    }
 
-	/*
-	 * REIFEGRAD
-	 */
-	public double getReifegrad() {
-		return aktuelleReifeDauerProperty.get();
-	}
+    /*
+     * REIFEGRAD
+     */
+    public double getReifegrad() {
+        return aktuelleReifeDauerProperty.get();
+    }
 
-	public ReadOnlyDoubleProperty reifegradProperty() {
-		return aktuelleReifeDauerProperty;
-	}
+    public ReadOnlyDoubleProperty reifegradProperty() {
+        return aktuelleReifeDauerProperty;
+    }
 
-	/*
-	 * AKTUELLER ZUSTAND
-	 */
+    /*
+     * AKTUELLER ZUSTAND
+     */
 
-	public ReadOnlyBooleanProperty istReifProperty() {
-		return istReifProperty;
-	}
+    public ReadOnlyBooleanProperty istReifProperty() {
+        return istReifProperty;
+    }
 
-	public ReadOnlyBooleanProperty istFauligProperty() {
-		return istFauligProperty;
-	}
+    public ReadOnlyBooleanProperty istFauligProperty() {
+        return istFauligProperty;
+    }
 
-	public ReadOnlyBooleanProperty istEingegangenProperty() {
-		return istEingegangenProperty;
-	}
+    public ReadOnlyBooleanProperty istEingegangenProperty() {
+        return istEingegangenProperty;
+    }
 
-	public ReadOnlyBooleanProperty istGeerntetWordenProperty() {
-		return istGeerntetWordenProperty;
-	}
+    public ReadOnlyBooleanProperty istGeerntetWordenProperty() {
+        return istGeerntetWordenProperty;
+    }
 
-	/**
-	 * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
-	 * 
-	 * @author sialcasa
-	 * 
-	 */
-	private class LebensZyklus {
+    /**
+     * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
+     * 
+     * @author sialcasa
+     * 
+     */
+    private class LebensZyklus {
 
-		private SequentialTransition lebensZyklus;
+        private SequentialTransition lebensZyklus;
 
-		public void wachse() {
-			// FIXME
-			// **** BEGIN LIVE CODING ****
-			// Wachstum
-			Timeline reifung = TimelineBuilder
-					.create()
-					.delay(Duration.seconds(new Random().nextDouble() * 10))
-					.keyFrames(
-							new KeyFrame(Duration.seconds(getWachsdauer()),
-									new KeyValue(aktuelleReifeDauerProperty,
-											getWachsdauer()))).build();
-			// Zeit, wann die Frucht reif ist
-			Timeline istReif = TimelineBuilder
-					.create()
-					.keyFrames(
-							new KeyFrame(Duration.seconds(1), new KeyValue(
-									istFauligProperty, true))).build();
+        public void wachse() {
+            // FIXME
+            // **** BEGIN LIVE CODING ****
+            // Wachstum
+            final Timeline reifung =
+                    TimelineBuilder
+                            .create()
+                            /* SPÄTER */.delay(Duration.seconds(new Random().nextDouble() * 10))
+                            // SPÄTER
+                            .keyFrames(
+                                    new KeyFrame(Duration.seconds(getWachsdauer()), new KeyValue(
+                                            aktuelleReifeDauerProperty, getWachsdauer()))).build();
+            // Zeit, wann die Frucht reif ist
+            final Timeline istReif =
+                    TimelineBuilder.create()
+                            .keyFrames(new KeyFrame(Duration.seconds(1), new KeyValue(istFauligProperty, true)))
+                            .build();
 
-			// Faulen der Frucht
-			Timeline faulen = TimelineBuilder
-					.create()
-					.keyFrames(
-							new KeyFrame(Duration.seconds(getWachsdauer()),
-									new KeyValue(istEingegangenProperty, true)))
-					.build();
+            // Faulen der Frucht
+            final Timeline faulen =
+                    TimelineBuilder
+                            .create()
+                            .keyFrames(
+                                    new KeyFrame(Duration.seconds(getWachsdauer()), new KeyValue(
+                                            istEingegangenProperty, true))).build();
 
-			// Leben starten
-			lebensZyklus = SequentialTransitionBuilder.create()
-					.children(reifung, istReif, faulen).build();
+            // Leben starten
+            lebensZyklus = SequentialTransitionBuilder.create().children(reifung, istReif, faulen).build();
 
-			lebensZyklus.play();
-		}
+            lebensZyklus.play();
+        }
 
-		public void ernten() {
-			lebensZyklus.stop();
-		}
-	}
+        public void ernten() {
+            lebensZyklus.stop();
+        }
+    }
 }

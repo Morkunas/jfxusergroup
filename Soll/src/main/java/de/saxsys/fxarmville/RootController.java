@@ -15,38 +15,37 @@ import de.saxsys.fxarmville.presentation.FXarm;
 //**** BEGIN LIVE CODING ****
 public class RootController implements Initializable {
 
-	@FXML
-	private Pane mainPane;
-	@FXML
-	private Label anzahlReif;
-	@FXML
-	private Label korb;
-	@FXML
-	private Pane statistik;
+    @FXML
+    private Pane mainPane;
+    @FXML
+    private Label anzahlReif;
+    @FXML
+    private Label korb;
+    @FXML
+    private Pane statistik;
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		final Farm farm = new Farm();
-		final FXarm fxFarm = new FXarm(farm);
-		mainPane.getChildren().add(fxFarm);
-		
-		anzahlReif.textProperty().bind(
-				Bindings.concat("Reife Früchte: ", farm.anzahlReiferFruechteProperty()));
+    @Override
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
+        final Farm farm = new Farm();
+        final FXarm fxFarm = new FXarm(farm);
+        mainPane.getChildren().add(fxFarm);
 
-		StringBinding anzahlGesammelt = new StringBinding() {
-			{
-				bind(farm.getKorb().gesammeltProperty());
-			}
+        anzahlReif.textProperty().bind(Bindings.concat("Reife Früchte: ", farm.anzahlReiferFruechteProperty()));
 
-			@Override
-			protected String computeValue() {
-				return "Im Korb: " + farm.getKorb().gesammeltProperty().size();
-			}
-		};
-		korb.textProperty().bind(anzahlGesammelt);
+        final StringBinding anzahlGesammelt = new StringBinding() {
+            {
+                bind(farm.getKorb().gesammeltProperty());
+            }
 
-		statistik.getChildren().add(new Statistik(farm));
-	}
+            @Override
+            protected String computeValue() {
+                return "Im Korb: " + farm.getKorb().gesammeltProperty().size();
+            }
+        };
+        korb.textProperty().bind(anzahlGesammelt);
+
+        statistik.getChildren().add(new Statistik(farm));
+    }
 
 }
-//**** END LIVE CODING ****
+// **** END LIVE CODING ****
