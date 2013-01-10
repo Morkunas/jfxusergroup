@@ -15,11 +15,11 @@ public class Frucht {
 	// Zeit für Reifung + Faulen
 	private final DoubleProperty lebenszeit = new SimpleDoubleProperty();
 
-	// Aktueller Reifegrad
+	// Aktueller Reife- /Faulgrad
 	private final DoubleProperty aktuelleLebenszeit = new SimpleDoubleProperty();
 
 	/*
-	 * Lebensabschnitte
+	 * Util: Lebensabschnitte
 	 */
 	private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
 	private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
