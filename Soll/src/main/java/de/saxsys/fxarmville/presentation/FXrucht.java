@@ -17,68 +17,68 @@ import de.saxsys.fxarmville.model.Frucht;
 // TODO: geerntet + eingegangen evtl. ins Frucht Modell? 
 public class FXrucht extends Parent {
 
-	private ImageView imageView = ImageViewBuilder.create().fitHeight(50)
-			.fitWidth(50).build();
+    private final ImageView imageView = ImageViewBuilder.create().fitHeight(50).fitWidth(50).build();
 
-	private Frucht frucht;
+    private final Frucht frucht;
 
-	public FXrucht(Frucht frucht) {
+    public FXrucht(final Frucht frucht) {
 
-		this.frucht = frucht;
+        this.frucht = frucht;
 
-		// Init
-		imageView.setImage(frucht.getBild());
-		getChildren().add(imageView);
+        // Init
+        imageView.setImage(frucht.getBild());
+        getChildren().add(imageView);
 
-		// Erntelistener
-		erzeugeMouseListenerZumErnten();
+        // Erntelistener
+        erzeugeMouseListenerZumErnten();
 
-		// Starten
-		starteWachstum();
-	}
+        // Starten
+        starteWachstum();
+    }
 
-	// **** BEGIN LIVE CODING ****
-	private void erzeugeMouseListenerZumErnten() {
-		setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				frucht.ernten();
-			}
-		});
-	}
+    // **** BEGIN LIVE CODING ****
+    private void erzeugeMouseListenerZumErnten() {
+        setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent arg0) {
+                frucht.ernten();
+            }
+        });
+    }
 
-	// END
+    // END
 
-	private void starteWachstum() {
-		final DoubleBinding standDerReifung = frucht.reifegradProperty()
-				.divide(frucht.wachsdauerProperty());
-		scaleXProperty().bind(standDerReifung);
-		scaleYProperty().bind(standDerReifung);
+    private void starteWachstum() {
 
-		// Wenn Frucht reif ist, bekommt sie glow
-		frucht.istReifProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean alterWert, Boolean neuerWert) {
-				if (neuerWert) {
-					setEffect(new Glow(10));
-				} else {
-					setEffect(null);
-				}
-			}
-		});
+        // FIXME
 
-		// Wenn sie faulig wird
-		frucht.istFauligProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean arg1, Boolean arg2) {
-				FadeTransition eingehen = FadeTransitionBuilder.create()
-						.duration(Duration.seconds(frucht.getWachsdauer()))
-						.node(FXrucht.this).toValue(0.0).build();
-				eingehen.play();
-			}
-		});
-	}
+        final DoubleBinding standDerReifung = frucht.reifegradProperty().divide(frucht.wachsdauerProperty());
+        scaleXProperty().bind(standDerReifung);
+        scaleYProperty().bind(standDerReifung);
+
+        // Wenn Frucht reif ist, bekommt sie glow
+        frucht.istReifProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(final ObservableValue<? extends Boolean> arg0, final Boolean alterWert,
+                    final Boolean neuerWert) {
+                if (neuerWert) {
+                    setEffect(new Glow(10));
+                } else {
+                    setEffect(null);
+                }
+            }
+        });
+
+        // Wenn sie faulig wird
+        frucht.istFauligProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(final ObservableValue<? extends Boolean> arg0, final Boolean arg1, final Boolean arg2) {
+                final FadeTransition eingehen =
+                        FadeTransitionBuilder.create().duration(Duration.seconds(frucht.getWachsdauer()))
+                                .node(FXrucht.this).toValue(0.0).build();
+                eingehen.play();
+            }
+        });
+    }
 
 }

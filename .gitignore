@@ -19,6 +19,7 @@ target/classes/de/saxsys/presentation/pageslider/ZiggZaggPane.class
 target/
 .classpath
 .project
+*/.class
 .settings/
 *.bak
 Soll/target
