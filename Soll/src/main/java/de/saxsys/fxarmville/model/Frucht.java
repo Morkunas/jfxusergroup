@@ -16,7 +16,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 import de.saxsys.fxarmville.model.util.FruchtBildLader;
-import de.saxsys.fxarmville.presentation.BugTracker;
+import de.saxsys.fxarmville.presentation.special.BugTracker;
 
 public class Frucht {
 

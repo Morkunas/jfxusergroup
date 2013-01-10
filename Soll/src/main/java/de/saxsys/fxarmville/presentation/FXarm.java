@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
+import de.saxsys.fxarmville.presentation.special.BugTracker;
 
 // TODO Testen mit Jemmy: Jagd Bugs
 public class FXarm extends Pane {

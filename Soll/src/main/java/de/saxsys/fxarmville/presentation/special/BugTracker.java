@@ -1,4 +1,4 @@
-package de.saxsys.fxarmville.presentation;
+package de.saxsys.fxarmville.presentation.special;
 
 import java.util.LinkedList;
 import java.util.List;

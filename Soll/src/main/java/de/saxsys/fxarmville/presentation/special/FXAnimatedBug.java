@@ -1,6 +1,8 @@
-package de.saxsys.fxarmville.presentation;
+package de.saxsys.fxarmville.presentation.special;
 
 import java.util.Random;
+
+import de.saxsys.fxarmville.presentation.FXarm;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
