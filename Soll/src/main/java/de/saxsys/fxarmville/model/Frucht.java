@@ -29,10 +29,10 @@ public class Frucht {
 	/*
 	 * Lebensabschnitte
 	 */
-	private final BooleanProperty istReifProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istFauligProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istEingegangenProperty = new SimpleBooleanProperty();
-	private final BooleanProperty istGeerntetWordenProperty = new SimpleBooleanProperty();
+	private final BooleanProperty istReif = new SimpleBooleanProperty();
+	private final BooleanProperty istFaulig = new SimpleBooleanProperty();
+	private final BooleanProperty istEingegangen = new SimpleBooleanProperty();
+	private final BooleanProperty istGeerntetWorden = new SimpleBooleanProperty();
 
 	private final LebensZyklus lebensZyklus = new LebensZyklus();
 	private final String bildName;
@@ -49,15 +49,15 @@ public class Frucht {
 	public void baueAn() {
 		// **** BEGIN LIVE CODING ****
 		DoubleBinding mitteDesLebens = lebenszeit.divide(2);
-		istReifProperty.bind(aktuelleLebenszeit.greaterThan(
+		istReif.bind(aktuelleLebenszeit.greaterThan(
 				mitteDesLebens.subtract(getReifedauer()))
 				.and(aktuelleLebenszeit.lessThan(mitteDesLebens
 						.add(getReifedauer()))));
 		// SPÄTER - nach Lebenszyklus
-		istEingegangenProperty.bind(aktuelleLebenszeit.greaterThanOrEqualTo(
-				lebenszeit).and(istGeerntetWordenProperty.not()));
-		istFauligProperty.bind(aktuelleLebenszeit.greaterThan(
-				lebenszeit.divide(2)).and(istReifProperty.not()));
+		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(lebenszeit)
+				.and(istGeerntetWorden.not()));
+		istFaulig.bind(aktuelleLebenszeit.greaterThan(lebenszeit.divide(2))
+				.and(istReif.not()));
 		// SPÄTER
 		lebensZyklus.wachse();
 		// **** END LIVE CODING ****
@@ -65,7 +65,7 @@ public class Frucht {
 
 	public void ernten() {
 		lebensZyklus.ernten();
-		istGeerntetWordenProperty.set(true);
+		istGeerntetWorden.set(true);
 	}
 
 	/*
@@ -95,19 +95,19 @@ public class Frucht {
 	 */
 
 	public ReadOnlyBooleanProperty istReifProperty() {
-		return istReifProperty;
+		return istReif;
 	}
 
 	public ReadOnlyBooleanProperty istFauligProperty() {
-		return istFauligProperty;
+		return istFaulig;
 	}
 
 	public ReadOnlyBooleanProperty istEingegangenProperty() {
-		return istEingegangenProperty;
+		return istEingegangen;
 	}
 
 	public ReadOnlyBooleanProperty istGeerntetWordenProperty() {
-		return istGeerntetWordenProperty;
+		return istGeerntetWorden;
 	}
 
 	// **** BEGIN LIVE CODING ****
