@@ -1,11 +1,6 @@
 package de.saxsys.fxarmville.model;
 
-import java.util.Random;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.TimelineBuilder;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -13,9 +8,7 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 import de.saxsys.fxarmville.model.util.FruchtBildLader;
-import de.saxsys.fxarmville.presentation.special.BugTracker;
 
 public class Frucht {
 
