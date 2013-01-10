@@ -37,7 +37,7 @@ public class FXAnimatedBug extends Group {
 
 	private PathTransition transition;
 
-	public FXAnimatedBug() {
+	protected FXAnimatedBug() {
 		int size = new Random().nextInt(40) + 70;
 		bug.setFitHeight(size);
 		bug.setFitWidth(size);

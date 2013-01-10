@@ -12,7 +12,7 @@
     <HBox prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <Pane fx:id="mainPane" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-image:url(&quot;erde.jpg&quot;);" />
-        <Pane maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+        <Pane maxWidth="500.0" minWidth="500.0" prefHeight="800.0" prefWidth="500.0">
           <children>
             <Label fx:id="korb" alignment="CENTER" layoutX="116.0" layoutY="44.0" prefWidth="270.0" style="-fx-font-size:20px;" text="Körbchen">
               <effect>
@@ -24,7 +24,7 @@
                 <DropShadow />
               </effect>
             </Label>
-            <Pane fx:id="statistik" layoutX="0.0" layoutY="68.0" prefHeight="432.4453125" prefWidth="486.0" />
+            <Pane fx:id="statistik" layoutX="0.0" layoutY="76.0" maxWidth="500.0" minWidth="500.0" prefHeight="424.0" prefWidth="500.0" />
           </children>
         </Pane>
       </children>
