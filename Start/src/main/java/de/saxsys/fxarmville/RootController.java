@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-//**** BEGIN LIVE CODING ****
 public class RootController implements Initializable {
 
        @Override
@@ -14,4 +13,3 @@ public class RootController implements Initializable {
     }
 
 }
-// **** END LIVE CODING ****
