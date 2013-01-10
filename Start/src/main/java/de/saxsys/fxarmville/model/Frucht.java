@@ -1,6 +1,6 @@
 package de.saxsys.fxarmville.model;
 
-import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -12,11 +12,11 @@ import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 public class Frucht {
 
-	// Zeit für Reifung / Faulung
-	private final DoubleProperty reifedauerProperty = new SimpleDoubleProperty();
+	// Zeit für Reifung + Faulen
+	private final DoubleProperty lebenszeit = new SimpleDoubleProperty();
 
-	// Aktuelle Reifedauer
-	private final DoubleProperty aktuelleReifeDauerProperty = new SimpleDoubleProperty();
+	// Aktueller Reifegrad
+	private final DoubleProperty aktuelleLebenszeit = new SimpleDoubleProperty();
 
 	/*
 	 * Lebensabschnitte
@@ -29,17 +29,20 @@ public class Frucht {
 	private final LebensZyklus lebensZyklus = new LebensZyklus();
 	private final String bildName;
 
-	public Frucht(String bildName, double reifedauer) {
+	public Frucht(final String bildName, final double lebenszeit) {
 		this.bildName = bildName;
-		reifedauerProperty.set(reifedauer);
+		this.lebenszeit.set(lebenszeit);
 	}
 
 	public Image getBild() {
 		return FruchtBildLader.getInstance().getBild(bildName);
 	}
 
+	/*
+	 * ANBAU
+	 */
 	public void baueAn() {
-		// FIXME
+		
 	}
 
 	public void ernten() {
@@ -48,25 +51,25 @@ public class Frucht {
 	}
 
 	/*
-	 * WACHSDAUER
+	 * LEBENSZEIT
 	 */
-	public ReadOnlyDoubleProperty wachsdauerProperty() {
-		return reifedauerProperty;
+	public ReadOnlyDoubleProperty lebenszeitProperty() {
+		return lebenszeit;
 	}
 
-	public double getWachsdauer() {
-		return reifedauerProperty.get();
+	public double getLebenszeit() {
+		return lebenszeit.get();
 	}
 
 	/*
 	 * REIFEGRAD
 	 */
-	public double getReifegrad() {
-		return aktuelleReifeDauerProperty.get();
+	public double getAktuelleLebenszeit() {
+		return aktuelleLebenszeit.get();
 	}
 
-	public ReadOnlyDoubleProperty reifegradProperty() {
-		return aktuelleReifeDauerProperty;
+	public DoubleProperty aktuelleLebenszeitProperty() {
+		return aktuelleLebenszeit;
 	}
 
 	/*
@@ -89,6 +92,7 @@ public class Frucht {
 		return istGeerntetWordenProperty;
 	}
 
+
 	/**
 	 * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
 	 * 
@@ -97,16 +101,10 @@ public class Frucht {
 	 */
 	private class LebensZyklus {
 
-		private SequentialTransition lebensZyklus;
+		private Timeline lebensZyklus;
 
 		public void wachse() {
-			// FIXME
-			// Wachstum
-			// Zeit, wann die Frucht reif ist
-
-			// Faulen der Frucht
-
-			// Leben starten
+			
 		}
 
 		public void ernten() {

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import de.saxsys.fxarmville.model.Frucht;
 
-//**** NUR ZEIGEN ****
 public class DataMock {
 
 	private static Random rand = new Random();

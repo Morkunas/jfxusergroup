@@ -7,12 +7,12 @@ import de.saxsys.fxarmville.model.Frucht;
 
 public class FXrucht extends Parent {
 
-	private ImageView imageView = ImageViewBuilder.create().fitHeight(50)
+	private final ImageView imageView = ImageViewBuilder.create().fitHeight(50)
 			.fitWidth(50).build();
 
-	private Frucht frucht;
+	private final Frucht frucht;
 
-	public FXrucht(Frucht frucht) {
+	public FXrucht(final Frucht frucht) {
 
 		this.frucht = frucht;
 
@@ -28,15 +28,11 @@ public class FXrucht extends Parent {
 	}
 
 	private void erzeugeMouseListenerZumErnten() {
-		// FIXME
+		
 	}
 
 	private void starteWachstum() {
-		// FIXME
-		// Wachstum visualisieren
 
-		// Wenn Frucht reif ist, bekommt sie glow
-
-		// Wenn sie faulig wird
 	}
+
 }

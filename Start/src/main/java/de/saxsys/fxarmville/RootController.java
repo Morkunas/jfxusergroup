@@ -5,17 +5,13 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
+//**** BEGIN LIVE CODING ****
 public class RootController implements Initializable {
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Farm initialisieren
-		
-		// Label Anzahl reifer Früchte
-		
-		// Label im Korb mit StringBinding
-		
-		// Statistik added
-	}
+       @Override
+    public void initialize(final URL arg0, final ResourceBundle arg1) {
+        
+    }
 
 }
+// **** END LIVE CODING ****

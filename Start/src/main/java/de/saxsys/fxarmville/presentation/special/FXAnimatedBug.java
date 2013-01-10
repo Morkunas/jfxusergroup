@@ -1,6 +1,8 @@
-package de.saxsys.fxarmville.presentation;
+package de.saxsys.fxarmville.presentation.special;
 
 import java.util.Random;
+
+import de.saxsys.fxarmville.presentation.FXarm;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
@@ -37,7 +39,7 @@ public class FXAnimatedBug extends Group {
 
 	private PathTransition transition;
 
-	public FXAnimatedBug() {
+	protected FXAnimatedBug() {
 		int size = new Random().nextInt(40) + 70;
 		bug.setFitHeight(size);
 		bug.setFitWidth(size);
