@@ -54,9 +54,10 @@ public class Frucht {
 				.and(aktuelleLebenszeit.lessThan(mitteDesLebens
 						.add(getReifedauer()))));
 		// SPÄTER - nach Lebenszyklus
-		istEingegangenProperty.bind(aktuelleLebenszeit.isEqualTo(lebenszeit));
-		istFauligProperty.bind(aktuelleLebenszeit.greaterThan(lebenszeit
-				.divide(2)).and(istReifProperty.not()));
+		istEingegangenProperty.bind(aktuelleLebenszeit.greaterThanOrEqualTo(
+				lebenszeit).and(istGeerntetWordenProperty.not()));
+		istFauligProperty.bind(aktuelleLebenszeit.greaterThan(
+				lebenszeit.divide(2)).and(istReifProperty.not()));
 		// SPÄTER
 		lebensZyklus.wachse();
 		// **** END LIVE CODING ****
@@ -111,8 +112,10 @@ public class Frucht {
 
 	// **** BEGIN LIVE CODING ****
 	private double getReifedauer() {
-		return getLebenszeit() / (16d * (BugTracker.getInstance().anzahlDerBugs() + 1));
+		return getLebenszeit()
+				/ (16d * (BugTracker.getInstance().anzahlDerBugs() + 1));
 	}
+
 	// **** END LIVE CODING ****
 
 	/**
@@ -137,7 +140,7 @@ public class Frucht {
 											getLebenszeit()))).build();
 
 			lebensZyklus.play();
-			
+
 			// **** END LIVE CODING ****
 		}
 
