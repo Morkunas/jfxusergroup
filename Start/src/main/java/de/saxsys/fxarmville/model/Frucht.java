@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
 import de.saxsys.fxarmville.model.util.FruchtBildLader;
+import de.saxsys.fxarmville.presentation.special.BugTracker;
 
 public class Frucht {
 
@@ -91,7 +92,10 @@ public class Frucht {
 	public ReadOnlyBooleanProperty istGeerntetWordenProperty() {
 		return istGeerntetWordenProperty;
 	}
-
+	
+	private double getReifedauer() {
+		return getLebenszeit() / 16d;
+	}
 
 	/**
 	 * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
