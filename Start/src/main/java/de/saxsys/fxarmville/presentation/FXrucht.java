@@ -7,32 +7,31 @@ import de.saxsys.fxarmville.model.Frucht;
 
 public class FXrucht extends Parent {
 
-	private final ImageView imageView = ImageViewBuilder.create().fitHeight(50)
-			.fitWidth(50).build();
+    private final ImageView imageView = ImageViewBuilder.create().fitHeight(50).fitWidth(50).build();
 
-	private final Frucht frucht;
+    private final Frucht frucht;
 
-	public FXrucht(final Frucht frucht) {
+    public FXrucht(final Frucht frucht) {
 
-		this.frucht = frucht;
+        this.frucht = frucht;
 
-		// Init
-		imageView.setImage(frucht.getBild());
-		getChildren().add(imageView);
+        // Init
+        imageView.setImage(frucht.getBild());
+        getChildren().add(imageView);
 
-		// Erntelistener
-		erzeugeMouseListenerZumErnten();
+        // Erntelistener
+        erzeugeMouseListenerZumErnten();
 
-		// Starten
-		starteWachstum();
-	}
+        // Starten
+        starteWachstum();
+    }
 
-	private void erzeugeMouseListenerZumErnten() {
-		
-	}
+    private void erzeugeMouseListenerZumErnten() {
+        // TODO LIVE
+    }
 
-	private void starteWachstum() {
-
-	}
+    private void starteWachstum() {
+        // TODO LIVE
+    }
 
 }

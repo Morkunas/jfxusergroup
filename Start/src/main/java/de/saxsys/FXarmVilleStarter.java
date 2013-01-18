@@ -8,37 +8,42 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.Stage;
 import de.saxsys.fxarmville.model.Farm;
+import de.saxsys.fxarmville.model.Frucht;
 import de.saxsys.fxarmville.presentation.FXarm;
 
 public class FXarmVilleStarter extends Application {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		launch(args);
-	}
+    /**
+     * @param args
+     */
+    public static void main(final String[] args) {
+        launch(args);
+    }
 
-	@Override
-	public void start(Stage stage) throws Exception {
-				
-		Pane rootPane = VBoxBuilder.create().spacing(10).build();
-		Slider fxruchtSlider = SliderBuilder.create().blockIncrement(0.05).min(0).max(1).build();
-		
-		Farm farm = new Farm();
-		FXarm fxArm = new FXarm(farm);
-		
-		// Slider an Lebenszeit binden
-		
-		rootPane.getChildren().addAll(fxArm, fxruchtSlider);
+    @Override
+    public void start(final Stage stage) throws Exception {
 
-		Scene rootScene = new Scene(rootPane, 500, 530);
-		rootScene.getStylesheets().add(
-				ClassLoader.getSystemResource("style.css").toString());
+        final Pane rootPane = VBoxBuilder.create().spacing(10).build();
+        final Slider fxruchtSlider = SliderBuilder.create().blockIncrement(0.05).min(0).max(1).build();
 
-		stage.setScene(rootScene);
-		stage.setTitle("FXarmVille");
-		stage.show();
-	}
+        // Model und View
+        final Farm farm = new Farm();
+        final FXarm fxArm = new FXarm(farm);
+
+        // Slider an Lebenszeit binden
+        for (final Frucht frucht : farm.angebautProperty()) {
+            frucht.aktuelleLebenszeitProperty().bind(
+                    fxruchtSlider.valueProperty().multiply(frucht.lebenszeitProperty()));
+        }
+
+        rootPane.getChildren().addAll(fxArm, fxruchtSlider);
+
+        final Scene rootScene = new Scene(rootPane, 500, 530);
+        rootScene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toString());
+
+        stage.setScene(rootScene);
+        stage.setTitle("FXarmVille");
+        stage.show();
+    }
 
 }

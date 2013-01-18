@@ -202,6 +202,10 @@ public class FXMultitouchExample extends Pane {
         });
     }
 
+    /**
+     * PRIVATE CLASSES - No good design but... ;)
+     */
+
     private class DemoLabel extends Group {
         Label label = new Label();
 
@@ -231,7 +235,7 @@ public class FXMultitouchExample extends Pane {
         }
     }
 
-    protected class VideoExample extends Pane {
+    private class VideoExample extends Pane {
         private final AnimationTimer timer;
         private final Canvas canvas;
         private final MediaExample background;
@@ -365,7 +369,7 @@ public class FXMultitouchExample extends Pane {
     /**
      * A Simple Particle that draws its self as a circle.
      */
-    public static class Particle {
+    private class Particle {
         private static final double GRAVITY = 0.06;
         // properties for animation
         // and colouring
@@ -436,13 +440,13 @@ public class FXMultitouchExample extends Pane {
             // draw the arrow triangle from where we were to where we are now
             if (hasTail) {
                 context.setFill(Color.rgb(255, 255, 255, 0.3));
-                context.fillPolygon(new double[] { posX + 1.5, posX + xVel, posX - 1.5 }, new double[] { posY,
+                context.fillPolygon(new double[] {posX + 1.5, posX + xVel, posX - 1.5 }, new double[] {posY,
                         posY + yVel, posY }, 3);
             }
         }
     }
 
-    protected class MediaExample extends Pane {
+    private class MediaExample extends Pane {
         private final MediaPlayer mediaPlayer;
         final double mediaWidth = 800;
         final double mediaHeight = 520;

@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 public class RootController implements Initializable {
-
-       @Override
+    // TODO LIVE
+    @Override
     public void initialize(final URL arg0, final ResourceBundle arg1) {
-        
+
     }
 
 }
