@@ -53,7 +53,7 @@ public class FXarm extends Pane {
 		TimelineBuilder
 				.create()
 				.keyFrames(
-						new KeyFrame(Duration.seconds(10),
+						new KeyFrame(Duration.seconds(3),
 								new EventHandler<ActionEvent>() {
 									@Override
 									public void handle(ActionEvent arg0) {
@@ -66,7 +66,6 @@ public class FXarm extends Pane {
 	// **** END LIVE CODING ****
 
 	private void initBeet() {
-		// **** BEGIN LIVE CODING ****
 		HBox reihe = null;
 		for (int i = 0; i < farm.angebautProperty().size(); i++) {
 			if (i % 10 == 0) {
@@ -76,7 +75,6 @@ public class FXarm extends Pane {
 			}
 		}
 		getChildren().add(beetReihenVertikal);
-		// **** END LIVE CODING ****
 
 		fruechte = FXCollections.observableArrayList();
 		ListChangeListener<Frucht> listChangeListener = new ListChangeListener<Frucht>() {

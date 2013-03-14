@@ -54,7 +54,7 @@ public class Frucht {
 
         // SPÄTER - nach Lebenszyklus
         istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(lebenszeit).and(istGeerntetWorden.not()));
-        istFaulig.bind(aktuelleLebenszeit.greaterThan(lebenszeit.divide(2)).and(istReif.not()));
+        istFaulig.bind(aktuelleLebenszeit.greaterThan(mitteDesLebens).and(istReif.not()));
         // SPÄTER
         lebensZyklus.wachse();
         // **** END LIVE CODING ****
