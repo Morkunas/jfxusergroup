@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
@@ -24,7 +25,7 @@
                 <DropShadow />
               </effect>
             </Label>
-            <Pane fx:id="statistik" layoutX="0.0" layoutY="76.0" maxWidth="500.0" minWidth="500.0" prefHeight="424.0" prefWidth="500.0" />
+            <PieChart id="PieChart" fx:id="statistik" layoutX="40.0" layoutY="96.0" prefHeight="372.0" prefWidth="420.0" />
           </children>
         </Pane>
       </children>
