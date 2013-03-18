@@ -35,7 +35,6 @@ public class FXrucht extends Parent {
 		starteWachstum();
 	}
 
-	// **** BEGIN LIVE CODING ****
 	private void erzeugeMouseListenerZumErnten() {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -47,22 +46,14 @@ public class FXrucht extends Parent {
 		});
 	}
 
-	// END
-
 	private void starteWachstum() {
 		// **** BEGIN LIVE CODING ****
 
-		final DoubleBinding standDerReifung = Bindings.min(
-				frucht.aktuelleLebenszeitProperty().divide(
-						frucht.lebenszeitProperty().divide(2)), 1.0);
+		final DoubleBinding standDerReifung = Bindings.min(frucht
+				.aktuelleLebenszeitProperty().multiply(2.0), 1.0);
 
 		scaleXProperty().bind(standDerReifung);
 		scaleYProperty().bind(standDerReifung);
-
-		final DoubleBinding standDerFaulung = Bindings.max(
-				Bindings.subtract(2, frucht.aktuelleLebenszeitProperty()
-						.divide(frucht.lebenszeitProperty()).multiply(2)), 0d);
-		opacityProperty().bind(standDerFaulung);
 
 		// Wenn Frucht reif ist, bekommt sie glow
 		frucht.istReifProperty().addListener(new ChangeListener<Boolean>() {
@@ -77,10 +68,10 @@ public class FXrucht extends Parent {
 			}
 		});
 
-		// Wenn sie faulig wird
-		// 2 * (1 - akt/gesamt)
-
 		// **** END LIVE CODING ****
-	}
 
+		final DoubleBinding standDerFaulung = Bindings.min(Bindings.subtract(2,
+				frucht.aktuelleLebenszeitProperty().multiply(2)), 1.0);
+		opacityProperty().bind(standDerFaulung);
+	}
 }

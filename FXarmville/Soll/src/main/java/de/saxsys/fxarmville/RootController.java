@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.presentation.FXarm;
 
-//**** BEGIN LIVE CODING ****
 public class RootController implements Initializable {
 
 	@FXML
@@ -26,7 +25,7 @@ public class RootController implements Initializable {
 	private PieChart statistik;
 
 	@Override
-	public void initialize(final URL arg0, final ResourceBundle arg1) {
+	public void initialize(final URL url, final ResourceBundle resourceBundle) {
 		final Farm farm = new Farm();
 		final FXarm fxFarm = new FXarm(farm);
 		mainPane.getChildren().add(fxFarm);
@@ -51,4 +50,3 @@ public class RootController implements Initializable {
 	}
 
 }
-// **** END LIVE CODING ****

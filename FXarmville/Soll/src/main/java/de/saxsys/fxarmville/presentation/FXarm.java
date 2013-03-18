@@ -11,7 +11,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -21,11 +20,10 @@ import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
 import de.saxsys.fxarmville.presentation.special.BugTracker;
 
-// TODO Testen mit Jemmy: Jagd Bugs
 public class FXarm extends Pane {
 
-	private Farm farm;
-	private VBox beetReihenVertikal = new VBox();
+	private final Farm farm;
+	private final VBox beetReihenVertikal = new VBox();
 	private ObservableList<Frucht> fruechte;
 
 	public FXarm(final Farm farm) {
@@ -33,13 +31,13 @@ public class FXarm extends Pane {
 		this.setId("FXarm");
 		initBeet();
 		startBugs();
-		
+
 		parentProperty().addListener(new ChangeListener<Parent>() {
 			@Override
-			public void changed(ObservableValue<? extends Parent> arg0,
-					Parent arg1, Parent arg2) {
+			public void changed(final ObservableValue<? extends Parent> arg0,
+					final Parent arg1, final Parent arg2) {
 				if (arg2 != null && arg2 instanceof Pane) {
-					Pane pane = (Pane) arg2;
+					final Pane pane = (Pane) arg2;
 					maxHeightProperty().bind(pane.heightProperty());
 					maxWidthProperty().bind(pane.widthProperty());
 				}
@@ -50,17 +48,16 @@ public class FXarm extends Pane {
 	// **** BEGIN LIVE CODING ****
 	private void startBugs() {
 
-		TimelineBuilder
-				.create()
-				.keyFrames(
-						new KeyFrame(Duration.seconds(3),
-								new EventHandler<ActionEvent>() {
-									@Override
-									public void handle(ActionEvent arg0) {
-										getChildren().add(BugTracker.getInstance().erzeugeBug());
-									}
-								})).cycleCount(Timeline.INDEFINITE).build()
-				.play();
+		final EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent arg0) {
+				getChildren().add(BugTracker.getInstance().erzeugeBug());
+			}
+		};
+
+		TimelineBuilder.create()
+				.keyFrames(new KeyFrame(Duration.seconds(3), eventHandler))
+				.cycleCount(Timeline.INDEFINITE).build().play();
 	}
 
 	// **** END LIVE CODING ****
@@ -77,16 +74,16 @@ public class FXarm extends Pane {
 		getChildren().add(beetReihenVertikal);
 
 		fruechte = FXCollections.observableArrayList();
-		ListChangeListener<Frucht> listChangeListener = new ListChangeListener<Frucht>() {
+		final ListChangeListener<Frucht> listChangeListener = new ListChangeListener<Frucht>() {
 			@Override
 			public void onChanged(
-					javafx.collections.ListChangeListener.Change<? extends Frucht> c) {
+					final javafx.collections.ListChangeListener.Change<? extends Frucht> c) {
 				c.next();
 				for (int index = c.getFrom(); index < c.getTo(); index++) {
 					// neue Frucht oder auch Frucht ersetzt...
 					if (c.wasAdded()) {
-						Frucht frucht = c.getList().get(index);
-						FXrucht fXrucht = new FXrucht(frucht);
+						final Frucht frucht = c.getList().get(index);
+						final FXrucht fXrucht = new FXrucht(frucht);
 						frucht.istEingegangenProperty().addListener(
 								neueFruchtHandler(frucht, false));
 						frucht.istGeerntetWordenProperty().addListener(
@@ -107,15 +104,14 @@ public class FXarm extends Pane {
 
 		fruechte.addListener(listChangeListener);
 		Bindings.bindContent(fruechte, farm.angebautProperty());
-		// END
 	}
 
 	private ChangeListener<Boolean> neueFruchtHandler(final Frucht frucht,
 			final boolean geerntet) {
 		return new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean arg1, Boolean arg2) {
+			public void changed(final ObservableValue<? extends Boolean> arg0,
+					final Boolean arg1, final Boolean arg2) {
 				if (geerntet) {
 					farm.ernteFrucht(frucht);
 				} else {
@@ -125,8 +121,4 @@ public class FXarm extends Pane {
 		};
 	}
 
-	@Override
-	public ObservableList<Node> getChildren() {
-		return super.getChildren();
-	}
 }

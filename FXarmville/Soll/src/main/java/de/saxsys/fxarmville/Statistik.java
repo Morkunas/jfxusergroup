@@ -8,7 +8,6 @@ import javafx.scene.chart.PieChart.Data;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
 
-//**** NUR ZEIGEN ****
 public class Statistik {
 
 	public static void erzeugeStatistikDaten(final Farm farm,
