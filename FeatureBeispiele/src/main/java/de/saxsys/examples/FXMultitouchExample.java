@@ -15,15 +15,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * Dieses Beispiel zeigt die Funktionaltät von Touch-Events und Anwendung von Filtern.
+ */
 public class FXMultitouchExample extends Pane {
 
     private final VideoExample media = new VideoExample();
 
-    private TouchState touchState = TouchState.UNTOUCHED;
-
+    /**
+     * Um konkurierende Nebenläufigkeiten der Touchevents zu vermeiden, nutzen wir eine Statemachine.
+     */
     private enum TouchState {
         UNTOUCHED, TOUCHED, MOVING
     }
+
+    private TouchState touchState = TouchState.UNTOUCHED;
 
     public FXMultitouchExample() {
         getChildren().add(media);
@@ -34,13 +40,9 @@ public class FXMultitouchExample extends Pane {
 
     private void createEventHandler() {
         initMouseDoubleClick();
-
         initTouch();
-
         initSwipe();
-
         initZoom();
-
         initRotation();
     }
 
@@ -141,11 +143,28 @@ public class FXMultitouchExample extends Pane {
         });
     }
 
-    private void removeCircles(final List<Circle> circles) {
-        for (final Circle circl : circles) {
-            getChildren().remove(circl);
-        }
-        circles.clear();
+    private void initZoom() {
+        media.setOnZoom(new EventHandler<ZoomEvent>() {
+            @Override
+            public void handle(final ZoomEvent event) {
+                touchState = TouchState.TOUCHED;
+                media.setScaleX(media.getScaleX() * event.getZoomFactor());
+                media.setScaleY(media.getScaleY() * event.getZoomFactor());
+            }
+        });
+    }
+
+    private void initRotation() {
+        /*
+         * FIXME LIVE
+         */
+        media.setOnRotate(new EventHandler<RotateEvent>() {
+            @Override
+            public void handle(final RotateEvent event) {
+                touchState = TouchState.TOUCHED;
+                media.setRotate(media.getRotate() + event.getAngle());
+            }
+        });
     }
 
     private void initSwipe() {
@@ -188,44 +207,21 @@ public class FXMultitouchExample extends Pane {
         });
     }
 
-    private void initZoom() {
-        media.setOnZoom(new EventHandler<ZoomEvent>() {
-            @Override
-            public void handle(final ZoomEvent event) {
-                touchState = TouchState.TOUCHED;
-                media.setScaleX(media.getScaleX() * event.getZoomFactor());
-                media.setScaleY(media.getScaleY() * event.getZoomFactor());
-
-                // final Scale scale = new Scale();
-                // scale.setX(media.getScaleX() * event.getZoomFactor());
-                // scale.setY(media.getScaleY() * event.getZoomFactor());
-                // scale.setPivotX(event.getX() - media.getBoundsInLocal().getMinX());
-                // scale.setPivotY(event.getY() - media.getBoundsInLocal().getMinY());
-                //
-                // media.getTransforms().add(scale);
-            }
-        });
-    }
-
-    private void initRotation() {
-        /*
-         * FIXME LIVE
-         */
-        // media.setRotationAxis(new Point3D(media.getBoundsInLocal().getWidth() / 2,
-        // media.getBoundsInLocal().getHeight() / 2, 0));
-        media.setOnRotate(new EventHandler<RotateEvent>() {
-            @Override
-            public void handle(final RotateEvent event) {
-                touchState = TouchState.TOUCHED;
-                media.setRotate(media.getRotate() + event.getAngle());
-            }
-        });
-    }
+    /*
+     * HELPER
+     */
 
     private Circle createCircle() {
         final Circle newC = new Circle();
         newC.setRadius(20);
         newC.setFill(Color.RED);
         return newC;
+    }
+
+    private void removeCircles(final List<Circle> circles) {
+        for (final Circle circl : circles) {
+            getChildren().remove(circl);
+        }
+        circles.clear();
     }
 }
