@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import de.saxsys.fxarmville.model.Farm;
 import de.saxsys.fxarmville.model.Frucht;
-import de.saxsys.fxarmville.presentation.special.BugTracker;
+import de.saxsys.fxarmville.presentation.special.CodeFactory;
 
 public class FXarm extends Pane {
 
@@ -50,8 +50,8 @@ public class FXarm extends Pane {
 
 		final EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(final ActionEvent arg0) {
-				getChildren().add(BugTracker.getInstance().erzeugeBug());
+			public void handle(final ActionEvent actionEvent) {
+				getChildren().add(CodeFactory.getInstance().erzeugeRealismus());
 			}
 		};
 

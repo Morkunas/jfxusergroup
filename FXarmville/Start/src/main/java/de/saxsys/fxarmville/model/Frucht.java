@@ -1,12 +1,7 @@
 package de.saxsys.fxarmville.model;
 
-import java.util.Random;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.TimelineBuilder;
-import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -14,19 +9,21 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 import de.saxsys.fxarmville.model.util.FruchtBildLader;
 
 public class Frucht {
 
-	// Zeit für Reifung + Faulen
+	// wie lange ist eine Frucht reif
+	private static final double REIFEDAUER = 0.05;
+
+	// Zeit für Reifung / Faulen
 	private final DoubleProperty lebenszeit = new SimpleDoubleProperty();
 
-	// Aktueller Reife- /Faulgrad
+	// Aktueller Reifegrad
 	private final DoubleProperty aktuelleLebenszeit = new SimpleDoubleProperty();
 
 	/*
-	 * Util: Lebensabschnitte
+	 * Lebensabschnitte
 	 */
 	private final BooleanProperty istReif = new SimpleBooleanProperty();
 	private final BooleanProperty istFaulig = new SimpleBooleanProperty();
@@ -41,30 +38,36 @@ public class Frucht {
 		this.lebenszeit.set(lebenszeit);
 	}
 
-	public Image getBild() {
-		return FruchtBildLader.getInstance().getBild(bildName);
+	public void baueAn() {
+		istReif.bind(Bindings
+				.lessThan(0.5 - REIFEDAUER, aktuelleLebenszeit)
+				.and(Bindings.greaterThan(0.5 + REIFEDAUER, aktuelleLebenszeit)));
+
+		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(1.0).and(
+				istGeerntetWorden.not()));
+
+		istFaulig.bind(aktuelleLebenszeit.greaterThan(0.5).and(istReif.not()));
+
+		lebensZyklus.wachsen();
 	}
 
-	/*
-	 * ANBAU
+	/**
+	 * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
+	 * 
+	 * @author sialcasa
+	 * 
 	 */
-	public void baueAn() {
-		// TODO LIVE
-		final DoubleBinding mitteDesLebens = lebenszeit.divide(2);
-		istReif.bind(aktuelleLebenszeit.greaterThan(
-				mitteDesLebens.subtract(getReifedauer()))
-				.and(aktuelleLebenszeit.lessThan(mitteDesLebens
-						.add(getReifedauer()))));
+	private class LebensZyklus {
 
-		// END LIVE
+		private Timeline lebensZyklus;
 
-		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(lebenszeit)
-				.and(istGeerntetWorden.not()));
+		public void wachsen() {
+			// **** BEGIN LIVE CODING ****
+		}
 
-		istFaulig.bind(aktuelleLebenszeit.greaterThan(mitteDesLebens).and(
-				istReif.not()));
-
-		lebensZyklus.wachse();
+		public void ernten() {
+			// **** BEGIN LIVE CODING ****
+		}
 	}
 
 	public void ernten() {
@@ -72,8 +75,12 @@ public class Frucht {
 		istGeerntetWorden.set(true);
 	}
 
+	public Image getBild() {
+		return FruchtBildLader.getInstance().getBild(bildName);
+	}
+
 	/*
-	 * LEBENSZEIT
+	 * WACHSDAUER
 	 */
 	public ReadOnlyDoubleProperty lebenszeitProperty() {
 		return lebenszeit;
@@ -112,37 +119,5 @@ public class Frucht {
 
 	public ReadOnlyBooleanProperty istGeerntetWordenProperty() {
 		return istGeerntetWorden;
-	}
-
-	private double getReifedauer() {
-		return getLebenszeit() / 16d;
-	}
-
-	/**
-	 * Private Klasse welche den Lebenszyklus einer Frucht abbildet.
-	 * 
-	 * @author sialcasa
-	 * 
-	 */
-	private class LebensZyklus {
-
-		private Timeline lebensZyklus;
-		private final Random random = new Random();
-
-		public void wachse() {
-			// TODO LIVE
-			lebensZyklus = TimelineBuilder
-					.create()
-					.delay(Duration.seconds(random.nextInt(10)))
-					.keyFrames(
-							new KeyFrame(Duration.seconds(getLebenszeit()),
-									new KeyValue(aktuelleLebenszeit,
-											getLebenszeit()))).build();
-			lebensZyklus.play();
-		}
-
-		public void ernten() {
-			lebensZyklus.stop();
-		}
 	}
 }

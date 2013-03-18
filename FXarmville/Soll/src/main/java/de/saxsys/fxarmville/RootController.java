@@ -28,6 +28,7 @@ public class RootController implements Initializable {
 	public void initialize(final URL url, final ResourceBundle resourceBundle) {
 		final Farm farm = new Farm();
 		final FXarm fxFarm = new FXarm(farm);
+
 		mainPane.getChildren().add(fxFarm);
 
 		anzahlReif.textProperty().bind(

@@ -44,10 +44,6 @@ public class Frucht {
 		this.lebenszeit.set(lebenszeit);
 	}
 
-	public Image getBild() {
-		return FruchtBildLader.getInstance().getBild(bildName);
-	}
-
 	public void baueAn() {
 		istReif.bind(Bindings
 				.lessThan(0.5 - REIFEDAUER, aktuelleLebenszeit)
@@ -58,7 +54,7 @@ public class Frucht {
 
 		istFaulig.bind(aktuelleLebenszeit.greaterThan(0.5).and(istReif.not()));
 
-		lebensZyklus.wachse();
+		lebensZyklus.wachsen();
 	}
 
 	/**
@@ -71,7 +67,7 @@ public class Frucht {
 
 		private Timeline lebensZyklus;
 
-		public void wachse() {
+		public void wachsen() {
 			// **** BEGIN LIVE CODING ****
 
 			lebensZyklus = TimelineBuilder
@@ -95,6 +91,10 @@ public class Frucht {
 	public void ernten() {
 		lebensZyklus.ernten();
 		istGeerntetWorden.set(true);
+	}
+
+	public Image getBild() {
+		return FruchtBildLader.getInstance().getBild(bildName);
 	}
 
 	/*

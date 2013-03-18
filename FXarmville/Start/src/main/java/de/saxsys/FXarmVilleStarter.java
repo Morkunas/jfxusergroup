@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.Stage;
 import de.saxsys.fxarmville.model.Farm;
+import de.saxsys.fxarmville.model.Frucht;
 import de.saxsys.fxarmville.presentation.FXarm;
 
 public class FXarmVilleStarter extends Application {
@@ -21,20 +22,16 @@ public class FXarmVilleStarter extends Application {
 
 	@Override
 	public void start(final Stage stage) throws Exception {
-
 		final Pane rootPane = VBoxBuilder.create().spacing(10).build();
 		final Slider fxruchtSlider = SliderBuilder.create()
-				.blockIncrement(0.05).min(0).max(1).build();
+				.blockIncrement(0.05).min(0).max(0.99).build();
 
-		// Model und View
 		final Farm farm = new Farm();
 		final FXarm fxArm = new FXarm(farm);
 
-		// // Slider an Lebenszeit binden
-		// for (final Frucht frucht : farm.angebautProperty()) {
-		// frucht.aktuelleLebenszeitProperty().bind(
-		// fxruchtSlider.valueProperty().multiply(frucht.lebenszeitProperty()));
-		// }
+		for (final Frucht frucht : farm.angebautProperty()) {
+			// **** LIVE CODING ****
+		}
 
 		rootPane.getChildren().addAll(fxArm, fxruchtSlider);
 

@@ -30,7 +30,7 @@ public class FXarmVilleStarter extends Application {
 
 		// final Pane rootPane = VBoxBuilder.create().spacing(10).build();
 		// final Slider fxruchtSlider = SliderBuilder.create()
-		// .blockIncrement(0.05).min(0).max(1).build();
+		// .blockIncrement(0.05).min(0).max(0.99).build();
 		//
 		// final Farm farm = new Farm();
 		// final FXarm fxArm = new FXarm(farm);

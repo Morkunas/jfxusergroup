@@ -35,10 +35,10 @@ public class Farm {
 
 	private Frucht erzeugeFrucht() {
 		final Frucht frucht = DataMock.erzeugeZufallsFrucht();
-		ChangeListener<Boolean> istReifListener = new ChangeListener<Boolean>() {
+		final ChangeListener<Boolean> istReifListener = new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> bean,
-					Boolean oldValue, Boolean newValue) {
+			public void changed(final ObservableValue<? extends Boolean> bean,
+					final Boolean oldValue, final Boolean newValue) {
 				if (newValue) {
 					anzahlReiferFruechteProperty
 							.set(anzahlReiferFruechteProperty.get() + 1);
@@ -52,20 +52,21 @@ public class Farm {
 		return frucht;
 	}
 
-	public void ernteFrucht(Frucht frucht) {
+	public void ernteFrucht(final Frucht frucht) {
 		getKorb().gesammeltProperty().add(frucht);
 		ersetzeFrucht(frucht);
 	}
 
-	public void ersetzeFrucht(Frucht frucht) {
-		int indexFrucht = angebautProperty.indexOf(frucht);
+	public void ersetzeFrucht(final Frucht frucht) {
+		final int indexFrucht = angebautProperty.indexOf(frucht);
 		if (indexFrucht == -1) {
 			// Frucht schon nicht mehr da
 			return;
 		}
 		angebautProperty.set(indexFrucht, erzeugeFrucht());
 		if (frucht.istReifProperty().get()) {
-			anzahlReiferFruechteProperty.set(anzahlReiferFruechteProperty.get() - 1);
+			anzahlReiferFruechteProperty
+					.set(anzahlReiferFruechteProperty.get() - 1);
 		}
 	}
 
