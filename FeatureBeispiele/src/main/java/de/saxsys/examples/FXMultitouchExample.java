@@ -2,11 +2,8 @@ package de.saxsys.examples;
 
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.RotateEvent;
@@ -20,7 +17,13 @@ import javafx.scene.shape.Circle;
 
 public class FXMultitouchExample extends Pane {
 
-    final VideoExample media = new VideoExample();
+    private final VideoExample media = new VideoExample();
+
+    private TouchState touchState = TouchState.UNTOUCHED;
+
+    private enum TouchState {
+        UNTOUCHED, TOUCHED, MOVING
+    }
 
     public FXMultitouchExample() {
         getChildren().add(media);
@@ -30,7 +33,6 @@ public class FXMultitouchExample extends Pane {
     }
 
     private void createEventHandler() {
-
         initMouseDoubleClick();
 
         initTouch();
@@ -44,30 +46,52 @@ public class FXMultitouchExample extends Pane {
 
     private void initMouseDoubleClick() {
         media.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
-            public void handle(final MouseEvent arg0) {
-                if (arg0.getClickCount() == 2)
+            public void handle(final MouseEvent event) {
+                // FIXME LIVE
+                if (event.getClickCount() == 2) {
                     media.start();
+                }
             }
         });
     }
 
     private void initTouch() {
 
-        final BooleanProperty touchArmed = new SimpleBooleanProperty();
+        /*
+         * TOUCH HALTEN
+         */
         media.setOnTouchStationary(new EventHandler<TouchEvent>() {
             @Override
             public void handle(final TouchEvent touchEvent) {
-
-                touchArmed.set(true);
-                media.setEffect(new DropShadow());
+                // FIXME LIVE
+                if (touchState == TouchState.UNTOUCHED) {
+                    touchState = TouchState.MOVING;
+                    media.setEffect(new DropShadow());
+                }
             }
         });
+
+        /*
+         * TOUCH RELEASEN
+         */
+        media.setOnTouchReleased(new EventHandler<TouchEvent>() {
+            @Override
+            public void handle(final TouchEvent touchEvent) {
+                // FIXME LIVE
+                touchState = TouchState.UNTOUCHED;
+                media.setEffect(null);
+            }
+        });
+
+        /*
+         * TOUCH MOVE
+         */
         media.setOnTouchMoved(new EventHandler<TouchEvent>() {
             @Override
             public void handle(final TouchEvent touchEvent) {
-                if (touchArmed.get()) {
+                // FIXME LIVE
+                if (touchState == TouchState.MOVING) {
                     TouchPoint exactPoint = null;
                     for (final TouchPoint touch : touchEvent.getTouchPoints()) {
                         if (exactPoint == null || touch.getX() > exactPoint.getX()) {
@@ -80,42 +104,44 @@ public class FXMultitouchExample extends Pane {
                 }
             }
         });
-        media.setOnTouchReleased(new EventHandler<TouchEvent>() {
 
-            @Override
-            public void handle(final TouchEvent arg0) {
-                touchArmed.set(false);
-                media.setEffect(null);
-            }
-        });
+        /*
+         * TOUCH MOVE - Circles zeichnen
+         */
         final List<Circle> circles = FXCollections.<Circle> observableArrayList();
+
         this.setOnTouchMoved(new EventHandler<TouchEvent>() {
 
             @Override
-            public void handle(final TouchEvent arg0) {
-                for (final TouchPoint point : arg0.getTouchPoints()) {
+            public void handle(final TouchEvent touchEvent) {
+                for (final TouchPoint point : touchEvent.getTouchPoints()) {
 
-                    final Circle newC = new Circle();
-                    newC.setRadius(20);
-                    newC.setTranslateX(point.getSceneX() - 10);
-                    newC.setTranslateY(point.getSceneY() - 10);
-                    newC.setFill(Color.RED);
-                    getChildren().add(newC);
-                    circles.add(newC);
+                    final Circle circle = createCircle();
+
+                    circle.setTranslateX(point.getSceneX() - circle.getRadius() / 2);
+                    circle.setTranslateY(point.getSceneY() - circle.getRadius() / 2);
+
+                    getChildren().add(circle);
+                    circles.add(circle);
                 }
             }
-        });
-        this.setOnTouchReleased(new EventHandler<TouchEvent>() {
 
+        });
+
+        /*
+         * TOUCH RELEASE CIRCLES ENTFERNEN
+         */
+
+        this.setOnTouchReleased(new EventHandler<TouchEvent>() {
             @Override
-            public void handle(final TouchEvent arg0) {
-                clearCircl(circles);
+            public void handle(final TouchEvent touchEvent) {
+                removeCircles(circles);
             }
 
         });
     }
 
-    private void clearCircl(final List<Circle> circles) {
+    private void removeCircles(final List<Circle> circles) {
         for (final Circle circl : circles) {
             getChildren().remove(circl);
         }
@@ -123,6 +149,11 @@ public class FXMultitouchExample extends Pane {
     }
 
     private void initSwipe() {
+
+        /*
+         * FIXME LIVE (eins)
+         */
+
         this.setOnSwipeDown(new EventHandler<SwipeEvent>() {
             @Override
             public void handle(final SwipeEvent event) {
@@ -161,26 +192,40 @@ public class FXMultitouchExample extends Pane {
         media.setOnZoom(new EventHandler<ZoomEvent>() {
             @Override
             public void handle(final ZoomEvent event) {
-                // Todo pivotpunkt?
+                touchState = TouchState.TOUCHED;
                 media.setScaleX(media.getScaleX() * event.getZoomFactor());
                 media.setScaleY(media.getScaleY() * event.getZoomFactor());
+
+                // final Scale scale = new Scale();
+                // scale.setX(media.getScaleX() * event.getZoomFactor());
+                // scale.setY(media.getScaleY() * event.getZoomFactor());
+                // scale.setPivotX(event.getX() - media.getBoundsInLocal().getMinX());
+                // scale.setPivotY(event.getY() - media.getBoundsInLocal().getMinY());
+                //
+                // media.getTransforms().add(scale);
             }
         });
     }
 
     private void initRotation() {
-        media.setRotationAxis(new Point3D(media.getBoundsInLocal().getWidth() / 2,
-                media.getBoundsInLocal().getHeight() / 2, 0));
+        /*
+         * FIXME LIVE
+         */
+        // media.setRotationAxis(new Point3D(media.getBoundsInLocal().getWidth() / 2,
+        // media.getBoundsInLocal().getHeight() / 2, 0));
         media.setOnRotate(new EventHandler<RotateEvent>() {
             @Override
             public void handle(final RotateEvent event) {
+                touchState = TouchState.TOUCHED;
                 media.setRotate(media.getRotate() + event.getAngle());
             }
         });
     }
 
-    /**
-     * PRIVATE CLASSES - No good design but... ;)
-     */
-
+    private Circle createCircle() {
+        final Circle newC = new Circle();
+        newC.setRadius(20);
+        newC.setFill(Color.RED);
+        return newC;
+    }
 }
