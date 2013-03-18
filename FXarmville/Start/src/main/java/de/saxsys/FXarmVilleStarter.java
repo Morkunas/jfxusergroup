@@ -13,37 +13,35 @@ import de.saxsys.fxarmville.presentation.FXarm;
 
 public class FXarmVilleStarter extends Application {
 
-    /**
-     * @param args
-     */
-    public static void main(final String[] args) {
-        launch(args);
-    }
+	/**
+	 * @param args
+	 */
+	public static void main(final String[] args) {
+		launch(args);
+	}
 
-    @Override
-    public void start(final Stage stage) throws Exception {
+	@Override
+	public void start(final Stage stage) throws Exception {
+		final Pane rootPane = VBoxBuilder.create().spacing(10).build();
+		final Slider fxruchtSlider = SliderBuilder.create()
+				.blockIncrement(0.05).min(0).max(0.99).build();
 
-        final Pane rootPane = VBoxBuilder.create().spacing(10).build();
-        final Slider fxruchtSlider = SliderBuilder.create().blockIncrement(0.05).min(0).max(1).build();
+		final Farm farm = new Farm();
+		final FXarm fxArm = new FXarm(farm);
 
-        // Model und View
-        final Farm farm = new Farm();
-        final FXarm fxArm = new FXarm(farm);
+		for (final Frucht frucht : farm.angebautProperty()) {
+			// **** LIVE CODING ****
+		}
 
-        // Slider an Lebenszeit binden
-        for (final Frucht frucht : farm.angebautProperty()) {
-            frucht.aktuelleLebenszeitProperty().bind(
-                    fxruchtSlider.valueProperty().multiply(frucht.lebenszeitProperty()));
-        }
+		rootPane.getChildren().addAll(fxArm, fxruchtSlider);
 
-        rootPane.getChildren().addAll(fxArm, fxruchtSlider);
+		final Scene rootScene = new Scene(rootPane, 500, 530);
+		rootScene.getStylesheets().add(
+				ClassLoader.getSystemResource("style.css").toString());
 
-        final Scene rootScene = new Scene(rootPane, 500, 530);
-        rootScene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toString());
-
-        stage.setScene(rootScene);
-        stage.setTitle("FXarmVille");
-        stage.show();
-    }
+		stage.setScene(rootScene);
+		stage.setTitle("FXarmVille");
+		stage.show();
+	}
 
 }

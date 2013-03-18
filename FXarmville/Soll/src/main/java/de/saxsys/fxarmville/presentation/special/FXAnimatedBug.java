@@ -19,6 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
@@ -130,12 +131,14 @@ public class FXAnimatedBug extends Group {
 	private EventHandler<? super MouseEvent> createMouseListener() {
 		return new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent arg0) {
-				arg0.consume();
-				bug.setImage(new Image(ClassLoader
-						.getSystemResourceAsStream("blood.png")));
-				transition.stop();
-				fadeBugOut();
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+					bug.setImage(new Image(ClassLoader
+							.getSystemResourceAsStream("blood.png")));
+					transition.stop();
+					fadeBugOut();
+				}
+				mouseEvent.consume();
 			}
 		};
 	}
