@@ -26,7 +26,7 @@ public class RootController implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resourceBundle) {
-		final Farm farm = new Farm();
+		final Farm farm = new Farm(true);
 		final FXarm fxFarm = new FXarm(farm);
 
 		mainPane.getChildren().add(fxFarm);

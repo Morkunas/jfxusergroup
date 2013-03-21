@@ -46,7 +46,7 @@ public class FXrucht extends Parent {
 	private void starteWachstum() {
 		// **** BEGIN LIVE CODING ****
 
-		faulen();
+		// faulen();
 	}
 
 	/**

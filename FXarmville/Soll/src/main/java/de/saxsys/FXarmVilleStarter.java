@@ -30,15 +30,10 @@ public class FXarmVilleStarter extends Application {
 
 		// final Pane rootPane = VBoxBuilder.create().spacing(10).build();
 		// final Slider fxruchtSlider = SliderBuilder.create()
-		// .blockIncrement(0.05).min(0).max(0.99).build();
+		// .blockIncrement(0.05).min(0).max(1.0).build();
 		//
-		// final Farm farm = new Farm();
+		// final Farm farm = new Farm(false);
 		// final FXarm fxArm = new FXarm(farm);
-		//
-		// for (final Frucht frucht : farm.angebautProperty()) {
-		// frucht.aktuelleLebenszeitProperty().bind(
-		// fxruchtSlider.valueProperty());
-		// }
 		//
 		// rootPane.getChildren().addAll(fxArm, fxruchtSlider);
 		//
@@ -49,6 +44,11 @@ public class FXarmVilleStarter extends Application {
 		// stage.setScene(rootScene);
 		// stage.setTitle("FXarmVille");
 		// stage.show();
+		//
+		// for (final Frucht frucht : farm.angebautProperty()) {
+		// frucht.aktuelleLebenszeitProperty().bind(
+		// fxruchtSlider.valueProperty());
+		// }
 	}
 
 }

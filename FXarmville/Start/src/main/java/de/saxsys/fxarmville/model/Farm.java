@@ -21,8 +21,10 @@ public class Farm {
 	private final ListProperty<Frucht> angebautProperty = new SimpleListProperty<>(
 			FXCollections.<Frucht> observableArrayList());
 	private final IntegerProperty anzahlReiferFruechteProperty = new SimpleIntegerProperty();
+	private final boolean pflanzeNeu;
 
-	public Farm() {
+	public Farm(final boolean pflanzeNeu) {
+		this.pflanzeNeu = pflanzeNeu;
 		init();
 	}
 
@@ -58,12 +60,14 @@ public class Farm {
 	}
 
 	public void ersetzeFrucht(final Frucht frucht) {
-		final int indexFrucht = angebautProperty.indexOf(frucht);
-		if (indexFrucht == -1) {
-			// Frucht schon nicht mehr da
-			return;
+		if (pflanzeNeu) {
+			final int indexFrucht = angebautProperty.indexOf(frucht);
+			if (indexFrucht == -1) {
+				// Frucht schon nicht mehr da
+				return;
+			}
+			angebautProperty.set(indexFrucht, erzeugeFrucht());
 		}
-		angebautProperty.set(indexFrucht, erzeugeFrucht());
 		if (frucht.istReifProperty().get()) {
 			anzahlReiferFruechteProperty
 					.set(anzahlReiferFruechteProperty.get() - 1);
