@@ -44,17 +44,16 @@ public class Frucht {
 	}
 
 	public void baueAn() {
-		final double haelfteAktuelleLebenszeit = 0.5;
+		final double haelfteDerLebenszeit = 0.5;
 		istReif.bind(aktuelleLebenszeit.greaterThan(
-				haelfteAktuelleLebenszeit - REIFEDAUER).and(
-				aktuelleLebenszeit.lessThan(haelfteAktuelleLebenszeit
-						+ REIFEDAUER)));
+				haelfteDerLebenszeit - REIFEDAUER).and(
+				aktuelleLebenszeit.lessThan(haelfteDerLebenszeit + REIFEDAUER)));
 
 		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(1.0).and(
 				istGeerntetWorden.not()));
 
-		istFaulig.bind(aktuelleLebenszeit
-				.greaterThan(haelfteAktuelleLebenszeit).and(istReif.not()));
+		istFaulig.bind(aktuelleLebenszeit.greaterThan(haelfteDerLebenszeit)
+				.and(istReif.not()));
 
 		lebensZyklus.wachsen();
 	}
