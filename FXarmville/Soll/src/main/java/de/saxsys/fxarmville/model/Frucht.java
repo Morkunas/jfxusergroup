@@ -6,7 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TimelineBuilder;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -25,7 +24,7 @@ public class Frucht {
 	// Zeit für Reifung / Faulen
 	private final DoubleProperty lebenszeit = new SimpleDoubleProperty();
 
-	// Aktueller Reifegrad
+	// Aktueller Reifegrad [0..1]
 	private final DoubleProperty aktuelleLebenszeit = new SimpleDoubleProperty();
 
 	/*
@@ -45,14 +44,17 @@ public class Frucht {
 	}
 
 	public void baueAn() {
-		istReif.bind(Bindings
-				.lessThan(0.5 - REIFEDAUER, aktuelleLebenszeit)
-				.and(Bindings.greaterThan(0.5 + REIFEDAUER, aktuelleLebenszeit)));
+		final double haelfteAktuelleLebenszeit = 0.5;
+		istReif.bind(aktuelleLebenszeit.greaterThan(
+				haelfteAktuelleLebenszeit - REIFEDAUER).and(
+				aktuelleLebenszeit.lessThan(haelfteAktuelleLebenszeit
+						+ REIFEDAUER)));
 
 		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(1.0).and(
 				istGeerntetWorden.not()));
 
-		istFaulig.bind(aktuelleLebenszeit.greaterThan(0.5).and(istReif.not()));
+		istFaulig.bind(aktuelleLebenszeit
+				.greaterThan(haelfteAktuelleLebenszeit).and(istReif.not()));
 
 		lebensZyklus.wachsen();
 	}
@@ -120,7 +122,7 @@ public class Frucht {
 	}
 
 	/*
-	 * AKTUELLER ZUSTAND
+	 * LEBENSABSCHNITTE
 	 */
 
 	public ReadOnlyBooleanProperty istReifProperty() {

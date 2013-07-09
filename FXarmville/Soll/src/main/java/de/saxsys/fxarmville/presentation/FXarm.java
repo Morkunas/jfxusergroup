@@ -55,7 +55,7 @@ public class FXarm extends Pane {
 			}
 		};
 
-		TimelineBuilder.create()
+		TimelineBuilder.create().delay(Duration.seconds(5))
 				.keyFrames(new KeyFrame(Duration.seconds(3), eventHandler))
 				.cycleCount(Timeline.INDEFINITE).build().play();
 	}
