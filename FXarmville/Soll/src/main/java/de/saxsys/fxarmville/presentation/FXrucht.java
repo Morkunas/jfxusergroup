@@ -68,10 +68,12 @@ public class FXrucht extends Parent {
 			}
 		});
 
+		opacityProperty().bind(standDerfaulung());
 		// **** END LIVE CODING ****
+	}
 
-		final DoubleBinding standDerFaulung = Bindings.min(Bindings.subtract(2,
-				frucht.aktuelleLebenszeitProperty().multiply(2)), 1.0);
-		opacityProperty().bind(standDerFaulung);
+	private DoubleBinding standDerfaulung() {
+		return Bindings.min(Bindings.subtract(2, frucht
+				.aktuelleLebenszeitProperty().multiply(2)), 1.0);
 	}
 }

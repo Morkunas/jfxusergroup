@@ -1,7 +1,6 @@
 package de.saxsys.fxarmville.model;
 
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -39,14 +38,16 @@ public class Frucht {
 	}
 
 	public void baueAn() {
-		istReif.bind(Bindings
-				.lessThan(0.5 - REIFEDAUER, aktuelleLebenszeit)
-				.and(Bindings.greaterThan(0.5 + REIFEDAUER, aktuelleLebenszeit)));
+		final double haelfteDerLebenszeit = 0.5;
+		istReif.bind(aktuelleLebenszeit.greaterThan(
+				haelfteDerLebenszeit - REIFEDAUER).and(
+				aktuelleLebenszeit.lessThan(haelfteDerLebenszeit + REIFEDAUER)));
 
 		istEingegangen.bind(aktuelleLebenszeit.greaterThanOrEqualTo(1.0).and(
 				istGeerntetWorden.not()));
 
-		istFaulig.bind(aktuelleLebenszeit.greaterThan(0.5).and(istReif.not()));
+		istFaulig.bind(aktuelleLebenszeit.greaterThan(haelfteDerLebenszeit)
+				.and(istReif.not()));
 
 		lebensZyklus.wachsen();
 	}
@@ -80,7 +81,7 @@ public class Frucht {
 	}
 
 	/*
-	 * WACHSDAUER
+	 * LEBENSZEIT
 	 */
 	public ReadOnlyDoubleProperty lebenszeitProperty() {
 		return lebenszeit;
@@ -91,14 +92,15 @@ public class Frucht {
 	}
 
 	/*
-	 * REIFEGRAD
+	 * AKTUELLE LEBENSZEIT
 	 */
-	public double getAktuelleLebenszeit() {
-		return aktuelleLebenszeit.get();
-	}
 
 	public DoubleProperty aktuelleLebenszeitProperty() {
 		return aktuelleLebenszeit;
+	}
+
+	public double getAktuelleLebenszeit() {
+		return aktuelleLebenszeit.get();
 	}
 
 	/*
